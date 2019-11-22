@@ -1,0 +1,154 @@
+import Util from "../../../lib/common/index";
+import baseConfig from "../../../lib/baseConfig/index"
+import { errorLog, successLog } from '../../../lib/printLog/index'
+import { resetCode } from '../../../lib/fillFiled/index';
+import storage from "../../../lib/storage/index";
+
+
+
+var postStatus = true;
+
+function checkLogBaseJson (obj) {
+    if (Util.paramType(obj) === 'Object' && !Util.isEmptyObject(obj)) {
+        var status = true
+        for (var i = 0; i < baseConfig.baseJson.length; i++) {
+            var key = baseConfig.baseJson[i]
+            if (key === 'xwhat') {
+                continue
+            }
+            if (!obj[key] || (Util.paramType(obj[key]) == 'Object' && Util.isEmptyObject(obj[key]))) {
+                status = false
+            }
+        }
+        return status
+    }
+    return false
+}
+
+function sendData (data) {
+    let postDataList = storage.getLocal("POSTDATA") || []
+    let saveData = [];
+    if (postDataList.length > 0) {
+        for (let i = 0; i < postDataList.length; i++) {
+            if (Util.paramType(postDataList[i]) === 'Array') {
+                saveData.push.apply(saveData, postDataList[i])
+            } else {
+                if (Util.paramType(postDataList[i]) === "Object" && checkLogBaseJson(postDataList[i])) {
+                    // 校验数据的合法性  是否为Object
+                    saveData.push(postDataList[i])
+                }
+            }
+        }
+    }
+    // 缓存 条数 超过500，不再存储
+    if (postDataList.length <= 500 && Object.keys(data).length > 0) {
+        saveData.push(data)
+    };
+    storage.setLocal("POSTDATA", saveData)
+    if (postStatus === true) {
+        sendPost(saveData)
+    }
+}
+
+function sendPost (upData) {
+    storage.removeLocal("POSTDATA")
+    resetCode();
+    postStatus = false;
+    let originUpData = upData;
+    let option = {
+        url: baseConfig.base.uploadURL + '?appid=' + baseConfig.base.appid,
+        data: upData,
+        encryptType: baseConfig.base.encryptType
+    }
+    // 过滤方法  假如有加密 将返回 加密后的 url 及 upData;
+    if (wx.AnalysysAgent.encrypt && Util.paramType(wx.AnalysysAgent.encrypt.uploadData) == "Function") {
+        option = wx.AnalysysAgent.encrypt.uploadData(option);
+    }
+    // 打印上传 数据 Data,打印上报 地址 uploadUrl
+    baseConfig.status.key = option.url;
+    baseConfig.status.value = JSON.stringify(upData);
+    baseConfig.status.successCode = "20012";
+    successLog();
+    wx.request({
+        url: option.url,
+        method: 'POST',
+        data: JSON.stringify(option.data),
+        dataType: "json",
+        success: function (res) {
+            postStatus = true;
+            // 时间校准 服务端时间和 前端时间的差值。（不再每次校验更改差值，全部用 allowTimeCheck 返回的值确定 ）
+            // if (res.header && res.header.Date) {
+            //     let time = +new Date()
+            //     let date = res.header.Date
+            //     if (date) {
+            //         storage.setLocal('ANSSERVERTIME', +new Date(date) - time)
+            //     }
+            // };
+            // 判断是不是加密的，根据字符串判断，（假如解密会是包增大）
+            if (Util.paramType(res.data) == "String") {
+                if (wx.AnalysysAgent.encrypt && Util.paramType(wx.AnalysysAgent.encrypt.decodeRes) == "Function") {
+                    res.data = JSON.parse(wx.AnalysysAgent.encrypt.decodeRes(res.data));
+                } else if (res.data == "H4sIAAAAAAAAAKtWSs5PSVWyMjIwqAUAVAOW6gwAAAA=") {
+                    res.data = {
+                        "code": 200
+                    }
+                } else if (res.data == "H4sIAAAAAAAAAKtWSs5PSVWyMjUwqAUA7TtBdwwAAAA=") {
+                    res.data = {
+                        "code": 500
+                    }
+                } else if (res.data == "H4sIAAAAAAAAAKtWSs5PSVWyMjEy0FHKLU5XslJySSxJVHBJTS6qLChRcC0qyi/S01OqBQBdATGSKQAAAA==") {
+                    res.data = {
+                        "code": 420
+                    }
+                } else {
+                    res.data = {
+                        "code": 200
+                    }
+                }
+            }
+            // 200 上报成功 删除数据，500，上报失败，删除数据。
+            if (res.data.code == 200 || res.data.code == 500 || res.data.code == 420) {
+                var nowLocalData = storage.getLocal("POSTDATA") || [];
+                if (nowLocalData.length > 0) {
+                    // 有产生新数据，上报新产生的数据
+                    sendPost(nowLocalData);
+                } else {
+                    // 没有产生新数据 
+                }
+                if (res.data.code == 200) {
+                    baseConfig.status.successCode = "20001";
+                    successLog();
+                } else {
+                    baseConfig.status.errorCode = "60008";
+                    errorLog();
+                }
+            } else {
+                baseConfig.status.errorCode = "60008";
+                errorLog();
+                // 是否单加一个 你需要升级 方舟服务端。
+                let newLocal = storage.getLocal("POSTDATA") || [];
+                let newSaveData = [...originUpData, ...newLocal];
+                storage.setLocal("POSTDATA", newSaveData);
+                if (newLocal.length > 0) {
+                    sendPost(newSaveData);
+                }
+            }
+        },
+        fail: function () {
+            postStatus = true;
+            baseConfig.status.errorCode = "60008";
+            errorLog();
+            let newLocal = storage.getLocal("POSTDATA") || [];
+            let newSaveData = [...originUpData, ...newLocal];
+            storage.setLocal("POSTDATA", newSaveData);
+            if (newLocal.length > 0) {
+                sendPost(newSaveData);
+            }
+        }
+    })
+}
+
+export {
+    sendPost,
+    sendData
+}

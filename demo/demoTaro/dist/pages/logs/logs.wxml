@@ -1,0 +1,28 @@
+<block wx:if="{{$taroCompReady}}">
+    <view class="container">
+        <view class="header">
+            <button bindtap="nextPage" hover-class="Button Hove">上一页</button>
+            <button bindtap="pageView" hover-class="Button Hove">pageView</button>
+            <button bindtap="track" hover-class="Button Hove">track</button>
+            <button bindtap="alias" hover-class="Button Hove">alias</button>
+            <button bindtap="identify" hover-class="Button Hove">identify</button>
+            <button bindtap="reset" hover-class="Button Hove">reset</button>
+            <button bindtap="registerSuperProperty" hover-class="Button Hove">registerSuperProperty</button>
+            <button bindtap="registerSuperProperties" hover-class="Button Hove">registerSuperProperties</button>
+            <button bindtap="unRegisterSuperProperty" hover-class="Button Hove">unRegisterSuperProperty</button>
+            <button bindtap="clearSuperProperties" hover-class="Button Hove">clearSuperProperties</button>
+            <button bindtap="getSuperProperty" hover-class="Button Hove">getSuperProperty</button>
+            <button bindtap="getSuperProperties" hover-class="Button Hove">getSuperProperties</button>
+            <button bindtap="profileSet" hover-class="Button Hove">profileSet</button>
+            <button bindtap="profileSetOnce" hover-class="Button Hove">profileSetOnce</button>
+            <button bindtap="profileIncrement" hover-class="Button Hove">profileIncrement</button>
+            <button bindtap="profileAppend" hover-class="Button Hove">profileAppend 单个属性</button>
+            <button bindtap="profileAppendObject" hover-class="Button Hove">profileAppend 多个属性集合</button>
+            <button bindtap="profileAppendArray" hover-class="Button Hove">profileAppend 列表类型属性</button>
+            <button bindtap="profileUnset" hover-class="Button Hove">profileUnset</button>
+            <button bindtap="profileDelete" hover-class="Button Hove">profileDelete</button>
+            <button bindtap="getDistinctId" hover-class="Button Hove">getDistinctId</button>
+            <button open-type="share" hover-class="Button Hove">分享</button>
+        </view>
+    </view>
+</block>

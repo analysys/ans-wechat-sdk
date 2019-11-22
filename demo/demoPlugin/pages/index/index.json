@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "inputpicker": "plugin://myPluginpicker/jsInputPicker"
+  }
+}

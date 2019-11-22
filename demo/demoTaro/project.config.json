@@ -1,0 +1,56 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "myAppfei",
+	"description": "demo",
+	"appid": "wx8e321e3470ac5c0b",
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"libVersion": "2.4.4",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "UTM",
+					"pathName": "pages/index/index",
+					"query": "campaign_id=1233333331&utm_source=22&utm_medium=33&utm_term=44&utm_content=0&utm_campaign=false",
+					"scene": null
+				}
+			]
+		}
+	}
+}

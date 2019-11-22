@@ -1,0 +1,45 @@
+/**index.wxss**/
+.demo-title{
+  margin-bottom:20px;
+}
+.demo-box{
+  display: flex;
+  width: 90%;
+  margin-bottom:10px;
+}
+#demo-box-API.API{
+  width: 100%;
+  background-color:#07c160;
+  color: white;
+}
+#demo-box-API.API.WARN{
+  background-color: #FA5151
+}
+
+
+
+
+
+.userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.header {
+    width: 80%;
+}
+
+.header button {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    margin-bottom: 10rpx;
+}
+.buttonHove{
+	color: #000000 !important;
+	 /*background-color: #bce8f1 !important;
+    border-color: #bce8f1 !important;*/
+}

@@ -1,0 +1,23 @@
+/**index.wxss**/
+
+.userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 80%;
+}
+
+.header button {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+    margin-bottom: 10rpx;
+}
+.buttonHove{
+	color: #000000 !important;
+	 /*background-color: #bce8f1 !important;
+    border-color: #bce8f1 !important;*/
+}

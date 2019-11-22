@@ -1,0 +1,105 @@
+<!-- index.wxml -->
+<view class="container">
+    <!-- <web-view src="http://localhost:8090/huaxiang/fangzhouBVisual/web/"></web-view> -->
+    <!-- <text class="demo-title">合法参数的API</text>
+      <view class='demo-box'>
+        <button bindtap="reset" class="demo-box-API">reset</button>
+        <icon wx:if = "{{reset.flag == 0}}" class="demo-box-waiting" type="waiting" size="43"></icon>
+        <icon wx:if = "{{reset.flag == 1}}" class="demo-box-success" type="success" size="43"></icon>
+        <icon wx:if = "{{reset.flag == -1}}" class="demo-box-warn" type="warn" size="43"></icon>
+      </view>
+      <view class='demo-box'>
+        <button bindtap="profileSet" class="demo-box-API">profileSet</button>
+        <icon wx:if = "{{profileSet.flag == 0}}" class="demo-box-waiting" type="waiting" size="43"></icon>
+        <icon wx:if = "{{profileSet.flag == 1}}" class="demo-box-success" type="success" size="43"></icon>
+        <icon wx:if = "{{profileSet.flag == -1}}" class="demo-box-warn" type="warn" size="43"></icon>
+      </view> -->
+    <view class="header">
+        <button bindtap="nextPage" hover-class="buttonHove">下一页</button>
+        <button id="demo-box-API" class="API">合法参数的API(超级属性系列)</button>
+        <button bindtap="registerSuperProperty" hover-class="buttonHove">
+            registerSuperProperty
+        </button>
+        <button bindtap="registerSuperProperties" hover-class="buttonHove">
+            registerSuperProperties
+        </button>
+        <button bindtap="unRegisterSuperProperty" hover-class="buttonHove">
+            unRegisterSuperProperty
+        </button>
+        <button bindtap="getSuperProperty" hover-class="buttonHove">getSuperProperty</button>
+        <button bindtap="getSuperProperties" hover-class="buttonHove">getSuperProperties</button>
+        <button bindtap="clearSuperProperties" hover-class="buttonHove">
+            clearSuperProperties
+        </button>
+        <!-- <button  id="demo-box-API" class="API WARN">不合法参数的API(超级属性系列)</button>
+        <button bindtap="registerSuperPropertyR" hover-class="buttonHove">
+            registerSuperPropertyR
+        </button>
+        <button bindtap="registerSuperPropertiesR" hover-class="buttonHove">
+            registerSuperPropertiesR
+        </button> -->
+        <button  id="demo-box-API" class="API">合法参数的API(profole系列)</button>
+        <button bindtap="profileSet" hover-class="buttonHove">profileSet</button>
+        <button bindtap="profileSetOnce" hover-class="buttonHove">profileSetOnce</button>
+        <button bindtap="profileIncrement" hover-class="buttonHove">profileIncrement</button>
+        <button bindtap="profileAppend" hover-class="buttonHove">profileAppend 单个属性</button>
+        <button bindtap="profileAppendObject" hover-class="buttonHove">profileAppend 多个属性集合</button>
+        <button bindtap="profileAppendArray" hover-class="buttonHove">profileAppend 列表类型属性</button>
+        <button bindtap="profileUnset" hover-class="buttonHove">profileUnset</button>
+        <button bindtap="profileDelete" hover-class="buttonHove">profileDelete</button>
+        <!-- <button  id="demo-box-API" class="API WARN">不合法参数的API(profole系列)</button>
+        <button bindtap="profileSetR" hover-class="buttonHove">profileSet</button>
+        <button bindtap="profileSetOnceR" hover-class="buttonHove">profileSetOnce</button>
+        <button bindtap="profileIncrementR" hover-class="buttonHove">profileIncrement</button>
+        <button bindtap="profileAppendR" hover-class="buttonHove">profileAppend 单个属性</button>
+        <button bindtap="profileAppendObjectR" hover-class="buttonHove">profileAppend 多个属性集合</button>
+        <button bindtap="profileAppendArrayR" hover-class="buttonHove">profileAppend 列表类型属性</button>
+        <button bindtap="profileUnsetR" hover-class="buttonHove">profileUnset</button> -->
+        <button  id="demo-box-API" class="API">合法参数的API(其他)</button>
+        <button bindtap="getPresetProperties" hover-class="buttonHove">getPresetProperties</button>
+        <button bindtap="pageView" hover-class="buttonHove">pageView</button>
+        <button bindtap="alias" hover-class="buttonHove">alias</button>
+        <button bindtap="track" hover-class="buttonHove">track</button>
+        <button bindtap="identify" hover-class="buttonHove">identify</button>
+        <button bindtap="reset" hover-class="buttonHove">reset</button>
+        <button bindtap="appProperty" hover-class="buttonHove">appProperty</button>
+        <button open-type="share" hover-class="buttonHove">share</button>
+        <button bindtap="getDistinctId" hover-class="buttonHove">getDistinctId</button>
+        <!-- <button id="demo-box-API" class="API WARN">不合法参数的API(其他)</button>
+        <button bindtap="pageViewR" hover-class="buttonHove">pageView</button>
+        <button bindtap="aliasR" hover-class="buttonHove">alias</button>
+        <button bindtap="trackR" hover-class="buttonHove">track</button> -->
+        <!-- <button bindtap="alias" hover-class="buttonHove">alias</button>
+
+        <button bindtap="reset" hover-class="buttonHove">reset</button>
+        <button bindtap="profileSet" hover-class="buttonHove">profileSet</button>
+        <button bindtap="profileSetOnce" hover-class="buttonHove">profileSetOnce</button>
+        <button bindtap="profileIncrement" hover-class="buttonHove">profileIncrement</button>
+        <button bindtap="profileAppend" hover-class="buttonHove">profileAppend 单个属性</button>
+        <button bindtap="profileAppendObject" hover-class="buttonHove">profileAppend 多个属性集合</button>
+        <button bindtap="profileAppendArray" hover-class="buttonHove">profileAppend 列表类型属性</button>
+        <button bindtap="profileUnset" hover-class="buttonHove">profileUnset</button>
+        <button bindtap="profileDelete" hover-class="buttonHove">profileDelete</button> -->
+        <!-- <button bindtap="nextPage" hover-class="buttonHove">下一页 UTM</button> -->
+        <!-- <button bindtap="reset" hover-class="buttonHove">reset</button> -->
+        <!-- <button bindtap="track" hover-class="buttonHove">track</button>
+        <button bindtap="alias" hover-class="buttonHove">alias</button>
+        <button bindtap="identify" hover-class="buttonHove">identify</button>
+        <button bindtap="reset" hover-class="buttonHove">reset</button>
+        <button bindtap="registerSuperProperty" hover-class="buttonHove">registerSuperProperty</button>
+        <button bindtap="registerSuperProperties" hover-class="buttonHove">registerSuperProperties</button>
+      
+        <button bindtap="clearSuperProperties" hover-class="buttonHove">clearSuperProperties</button>
+        <button bindtap="getSuperProperty" hover-class="buttonHove">getSuperProperty</button>
+        <button bindtap="getSuperProperties" hover-class="buttonHove">getSuperProperties</button>
+        <button bindtap="profileSet" hover-class="buttonHove">profileSet</button>
+        <button bindtap="profileSetOnce" hover-class="buttonHove">profileSetOnce</button>
+        <button bindtap="profileIncrement" hover-class="buttonHove">profileIncrement</button>
+        <button bindtap="profileAppend" hover-class="buttonHove">profileAppend 单个属性</button>
+        <button bindtap="profileAppendObject" hover-class="buttonHove">profileAppend 多个属性集合</button>
+        <button bindtap="profileAppendArray" hover-class="buttonHove">profileAppend 列表类型属性</button>
+        <button bindtap="profileUnset" hover-class="buttonHove">profileUnset</button>
+        <button bindtap="profileDelete" hover-class="buttonHove">profileDelete</button> -->
+        <!-- <text class="demo-title">不合法参数的API</text> -->
+    </view>
+</view>
