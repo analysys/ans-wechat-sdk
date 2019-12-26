@@ -1,10 +1,15 @@
 import baseConfig from '../../lib/baseConfig/index'
-import { resetCode, checkPrivate } from '../../lib/fillFiled/index'
+import {
+    resetCode,
+    checkPrivate
+} from '../../lib/fillFiled/index'
 import storage from '../../lib/storage/index'
-import { successLog } from "../../lib/printLog/index"
+import {
+    successLog
+} from "../../lib/printLog/index"
 import Util from '../../lib/common/index'
 
-function getSuperProperty (superPropertyName) {
+function getSuperProperty(superPropertyName) {
     baseConfig.status.FnName = '$getSuperProperty';
     resetCode();
     let status = checkPrivate(superPropertyName, '$getSuperProperty', true);
@@ -31,4 +36,6 @@ function getSuperProperty (superPropertyName) {
     successLog()
     return ""
 }
-export { getSuperProperty }
+export {
+    getSuperProperty
+}

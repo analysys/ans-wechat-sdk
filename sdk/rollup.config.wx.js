@@ -4,6 +4,31 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import { uglify } from 'rollup-plugin-uglify';
 import { terser } from "rollup-plugin-terser";
+import replace from 'rollup-plugin-replace';
+import path from 'path';
+
+
+const pathResolve = p => path.join(__dirname, p)
+
+function changePath () {
+    return {
+        name: 'changePath',
+        transform: function transform (code, id) {
+            code = code.replace(/\@Storage/g, pathResolve('./src/ProgramDiff/WX/storage'))
+                .replace(/\@Device/g, pathResolve('./src/ProgramDiff/WX/device'))
+                .replace(/\@Fetch/g, pathResolve('./src/ProgramDiff/WX/fetch'))
+                .replace(/\@Router/g, pathResolve('./src/ProgramDiff/WX/router'))
+                .replace(/\$ANS/g, 'WX')
+                .replace(/\$LIB/g, 'WeChat')
+                .replace(/\$LibVERSION/g, '4.3.1');
+            return {
+                code: code,
+                id: id
+            }
+        }
+    }
+}
+
 
 
 export default [{
@@ -29,6 +54,11 @@ export default [{
         })]
     }],
     plugins: [
+        changePath(),
+        replace({
+            $ans: 'wx',
+            delimiters: ['', '']
+        }),
         resolve({
             jsnext: true,
             main: true,
@@ -68,6 +98,11 @@ export default [{
         })]
     }],
     plugins: [
+        changePath(),
+        replace({
+            $ans: 'wx',
+            delimiters: ['', '']
+        }),
         resolve({
             jsnext: true,
             main: true,
@@ -107,6 +142,11 @@ export default [{
         })]
     }],
     plugins: [
+        changePath(),
+        replace({
+            $ans: 'wx',
+            delimiters: ['', '']
+        }),
         resolve({
             jsnext: true,
             main: true,

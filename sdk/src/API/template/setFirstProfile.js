@@ -6,7 +6,7 @@ import baseConfig from '../../lib/baseConfig/index'
 import { resetCode } from '../../lib/fillFiled/index'
 import storage from '../../lib/storage/index'
 import { pageView } from './pageView';
-import { sendData } from '../../ProgramDiff/Common/upload/index';
+import { sendData } from '../../lib/upload/index';
 import { getLanguage } from '../../lib/fillFiled/getField'
 
 
@@ -25,8 +25,9 @@ function setFirstProfile (type) {
     };
     let autoProfile = baseConfig.base.autoProfile;
     let auto = baseConfig.base.auto;
-    if (type == "startUp" || type == "appStart") {
-        // startUp 除了 profileSetOnce 还有 pageView
+    // if (type == "startUp" || type == "appStart") {
+    // startUp 除了 profileSetOnce 还有 pageView
+    if (type == "startUp") {
         if (autoProfile === true) {
             var ARKFRISTPROFILE = storage.getLocal('ARKFRISTPROFILESEND') || false;
             if (ARKFRISTPROFILE == false) {
@@ -42,15 +43,17 @@ function setFirstProfile (type) {
                 storage.setLocal("POSTDATA", ARKPOST);
             }
         }
-        if (auto === true && type == "startUp") {
+        if (auto === true) {
             pageView();
         } else {
             sendData({})
         }
     } else if (type == "alias") {
-        storage.setLocal('ARKFRISTPROFILESEND', true);
-        profileSetOnce(setOnce)     // alias 不更新时间
-        // return    在框架中这个 return 二次打包 有问题。
+        if (baseConfig.base.autoProfile == true) {
+            storage.setLocal('ARKFRISTPROFILESEND', true);
+            profileSetOnce(setOnce)     // alias 不更新时间
+            // return    在框架中这个 return 二次打包 有问题。
+        }
     } else {
         return;
     }

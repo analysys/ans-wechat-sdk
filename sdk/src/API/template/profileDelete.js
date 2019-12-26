@@ -2,7 +2,7 @@ import baseConfig from '../../lib/baseConfig/index'
 import { resetCode } from '../../lib/fillFiled/index'
 import { temp } from '../../lib/mergeRules/index'
 import { fillField } from '../../lib/fillFiled/index'
-import { sendData } from '../../ProgramDiff/Common/upload/index'
+import { sendData } from '../../lib/upload/index'
 import Util from '../../lib/common/index'
 
 

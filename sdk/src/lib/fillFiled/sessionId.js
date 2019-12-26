@@ -3,10 +3,10 @@ import MD5 from '../common/MD5.js'
 
 class SessionId {
     constructor() {
-        this.sessionId = storage.getLocal("SEESIONID") || this.setId();
-        this.sessionDate = storage.getLocal("SEESIONDATE") || 0;
+        this.sessionId = '' //storage.getLocal("SEESIONID") || this.setId();
+        this.sessionDate = '' //storage.getLocal("SEESIONDATE") || 0;
     }
-    setId () {
+    setId() {
         let date = +new Date()
         this.sessionId = MD5('WeChat' + date.toString() + Math.random(0, 10000000));
         this.sessionDate = date
@@ -16,7 +16,7 @@ class SessionId {
         return this.sessionId
         // storage.setLocal("LANGINGPAGE", true)
     }
-    getId () {
+    getId() {
         let date = new Date()
         let nowDate = date.getTime()
         let offset_GMT = date.getTimezoneOffset()

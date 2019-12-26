@@ -3,40 +3,55 @@ import Util from '../../lib/common/index'
 import storage from '../../lib/storage/index'
 import sessionId from '../../lib/fillFiled/sessionId'
 import id from '../../lib/fillFiled/id'
-import { temp } from '../../lib/mergeRules/index'
-import { fillField } from '../../lib/fillFiled/index'
-import { resetCode } from '../../lib/fillFiled/index'
-import { sendData } from '../../ProgramDiff/Common/upload/index'
-import { setFirstProfile } from './setFirstProfile'
-import { UTM } from '../../lib/fillFiled/UTM'
+import {
+    temp
+} from '../../lib/mergeRules/index'
+import {
+    fillField
+} from '../../lib/fillFiled/index'
+import {
+    resetCode
+} from '../../lib/fillFiled/index'
+import {
+    sendData
+} from '../../lib/upload/index'
+import {
+    setFirstProfile
+} from './setFirstProfile'
+import {
+    UTM
+} from '../../lib/fillFiled/UTM'
+
+import PublicApp from '../../lib/common/publicApp.js'
+let setPublicApp = PublicApp.setPublicApp
 
 
-
-function appStart (options) {
-    baseConfig.system.scene = options;
-    let scene = options;
+function appStart(options) {
+    let option = options
+    if (options && options._status == "create") {
+        setPublicApp(options)
+        option = options.options
+    }
     // 存在参数的 utm 赋值
-    if (scene.query && Object.keys(scene.query).length > 0) {
-        if (scene.query.utm_campaign && scene.query.utm_medium && scene.query.utm_source) {
-            UTM.utm_campaign_id = scene.query.campaign_id;
-            UTM.utm_campaign = scene.query.utm_campaign;
-            UTM.utm_content = scene.query.utm_content;
-            UTM.utm_medium = scene.query.utm_medium;
-            UTM.utm_source = scene.query.utm_source;
-            UTM.utm_term = scene.query.utm_term;
+    if (option.query && Object.keys(option.query).length > 0) {
+        if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
+            UTM.utm_campaign_id = option.query.campaign_id;
+            UTM.utm_campaign = option.query.utm_campaign;
+            UTM.utm_content = option.query.utm_content;
+            UTM.utm_medium = option.query.utm_medium;
+            UTM.utm_source = option.query.utm_source;
+            UTM.utm_term = option.query.utm_term;
         }
         // 关于分享的赋值引用
-        if (scene.query.share_id && scene.query.share_level && scene.query.share_path) {
-            baseConfig.base.$share_id = scene.query.share_id;
-            baseConfig.base.$share_level = scene.query.share_level;
-            baseConfig.base.$share_path = decodeURIComponent(scene.query.share_path);
+        if (option.query.share_id && option.query.share_level && option.query.share_path) {
+            baseConfig.base.$share_id = option.query.share_id;
+            baseConfig.base.$share_level = option.query.share_level;
+            baseConfig.base.$share_path = decodeURIComponent(option.query.share_path);
         }
     }
     // 更新场景值，从分享进去等操作。
-    if (options.scene) {
-        // if (baseConfig.system.scene) {
-        baseConfig.system.scene.scene = options.scene;
-        // }
+    if (option.scene) {
+        baseConfig.system.scene = options.scene;
     }
 
     baseConfig.isStartUp = true;
@@ -53,15 +68,16 @@ function appStart (options) {
             id.removeTrackId();
             storage.removeLocal('ARKSUPER');
             storage.removeLocal("ARKFRISTPROFILE"); //变更之后重新清除 ARKFRISTPROFILE。不然profile_set_once 不会上传
-            storage.removeLocal("ARKFRISTPROFILESEND");  //这是发送的标志            
+            storage.removeLocal("ARKFRISTPROFILESEND"); //这是发送的标志            
         }
         id.removeLoginId()
         storage.setData("STARTUP", true)
         storage.removeData("STARTUPTIME");
+        storage.removeData("ARK_TRACK_LOGIN")
         if (!baseConfig.base.allowTimeCheck) {
             storage.removeLocal("ANSSERVERTIME")
         }
-        storage.removeLocal("POSTDATA");  //变更 删除缓存数据 
+        storage.removeLocal("POSTDATA"); //变更 删除缓存数据 
         Util.setFristDay();
         Util.setFristTime()
     }
@@ -73,7 +89,7 @@ function appStart (options) {
     if (!isStartUp) {
         return;
     };
-    sessionId.setId();   //设置sessionID 和 sessionDate
+    sessionId.setId(); //设置sessionID 和 sessionDate
     storage.setData("STARTUP", false);
 
     // 上传字段表 更改为 Promise ，保证拿到设备信息和 网络状态 

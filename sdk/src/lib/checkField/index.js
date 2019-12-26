@@ -104,15 +104,12 @@ class CheckField {
     isArrayString (val) {
         if (Util.paramType(val) === 'Array') {
             for (var i = 0; i < val.length; i++) {
+                baseConfig.status.value = val[i]
                 if (Util.paramType(val[i]) !== 'String') {
                     baseConfig.status.errorCode = "600013"
                     return false
                 }
                 if (!this.length255(val[i])) {
-                    if (val[i].length > 500) {
-                        val[i] = Util.stringSlice(val[i], 499) + '$'
-                    }
-                    baseConfig.status.value = val[i]
                     return false
                 }
             }
@@ -121,6 +118,7 @@ class CheckField {
     }
     keywords (val) {
         var key = baseConfig.keywords
+        baseConfig.status.errorCode = "600012";
         return key.indexOf(val) > -1 ? false : true
     }
 }

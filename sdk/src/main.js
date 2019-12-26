@@ -1,9 +1,12 @@
 import baseConfig from './lib/baseConfig/index';
 import Util from './lib/common/index';
 import { errorLog, successLog } from './lib/printLog/index';
-import { resetCode } from './lib/fillFiled/index';
-import { API } from './API/index';
-import { UTM } from './lib/fillFiled/UTM'
+import {
+    resetCode
+} from './lib/fillFiled/index';
+import {
+    API
+} from './API/index';
 
 
 class Ark_PASS_SDK extends API {
@@ -173,39 +176,12 @@ wx.AnalysysAgent = ark_sdk;
 let APP = App;
 App = function (app) {
     // UTM 放在onshow ,保证小程序未被杀死，参数更改情况下重新获取。
-    appFn(app, 'onShow', function (options) {
-        baseConfig.system.scene = options;
-        let scene = options;
-        // 存在参数的 utm 赋值
-        if (Object.keys(scene.query).length > 0) {
-            if (scene.query.utm_campaign && scene.query.utm_medium && scene.query.utm_source) {
-                UTM.utm_campaign_id = scene.query.campaign_id;
-                UTM.utm_campaign = scene.query.utm_campaign;
-                UTM.utm_content = scene.query.utm_content;
-                UTM.utm_medium = scene.query.utm_medium;
-                UTM.utm_source = scene.query.utm_source;
-                UTM.utm_term = scene.query.utm_term;
-            }
-            // 关于分享的赋值引用
-            if (scene.query.share_id && scene.query.share_level && scene.query.share_path) {
-                baseConfig.base.$share_id = scene.query.share_id;
-                baseConfig.base.$share_level = scene.query.share_level;
-                baseConfig.base.$share_path = decodeURIComponent(scene.query.share_path);
-            }
-        }
-        // 更新场景值，从分享进去等操作。
-        if (options.scene) {
-            // if (baseConfig.system.scene) {
-            baseConfig.system.scene.scene = options.scene;
-            // }
-        }
-    })
+    appFn(app, 'onShow', ark_sdk.startUp)
     APP(app);
 };
 // 
 let PAGE = Page;
 Page = function (page) {
-    appFn(page, 'onShow', ark_sdk.startUp)
     if (baseConfig.base.autoShare == true) {
         appFn(page, 'onShareAppMessage', ark_sdk.share);
     }

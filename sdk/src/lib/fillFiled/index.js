@@ -3,17 +3,14 @@ import baseConfig from '../baseConfig/index.js'
 import { errorLog } from '../printLog/index.js'
 import checkRule from '../checkField/index.js'
 import fieldRules from '../../configure/base/fieldRules'
-// import { netWorkPromise } from '../../ProgramDiff/Common/device/network'
-// import { systemPromise } from '../../ProgramDiff/Common/device/system'
-// import { scenePromise } from '../../ProgramDiff/Common/device/scene'
-// import { UTM } from './UTM'
 import storage from '../../lib/storage/index'
 
 function check (value, checkList) {
     for (var i = 0; i < checkList.length; i++) {
+        // resetCode();
         var checkStatus = checkRule[checkList[i]](value)
         if (!checkStatus) {
-            return false
+            return false;
         }
     }
     return true
@@ -21,7 +18,6 @@ function check (value, checkList) {
 function checkFields (key, value, rule) {
     var checkRule = rule.check
     var status = true
-    var valueStatus = true
     if (!checkRule) {
         return status
     }
@@ -33,26 +29,38 @@ function checkFields (key, value, rule) {
         if (!status) {
             baseConfig.status.code = 400
             errorLog();
+            // return status;
         }
     }
     if (checkValue) {
         baseConfig.status.code = 200;
+        // if (key === 'd') {
+        //     console.log(value)
+        // }
         if (value && Util.paramType(value) == "Array") {
+            baseConfig.status.key = key;
             for (var i = 0; i < value.length; i++) {
-                valueStatus = check(value[i], ["isString", "length255"]);
-                baseConfig.status.key = value[i];
-                if (!valueStatus) {
+                status = check(value[i], ["isString", "length255"]);
+                if (!status) {
+                    baseConfig.status.value = value[i]
+                    if (Util.paramType(value[i]) !== 'String') {
+                        baseConfig.status.errorCode = "600013"
+                    }
+                    if (value[i].length > 500) {
+                        value[i] = Util.stringSlice(value[i], 499) + '$'
+                    }
                     baseConfig.status.code = 400;
                     errorLog();
                 }
             }
-            return;
+
+            return status;
         }
-        valueStatus = check(value, checkValue);
+        status = check(value, checkValue);
         if (Util.paramType(value) !== 'Array') {
             baseConfig.status.value = value
         }
-        if (!valueStatus) {
+        if (!status) {
             baseConfig.status.code = 400;
             errorLog();
         }
@@ -123,6 +131,7 @@ function fillField (feilds, rules) {
                     //     if (baseConfig.status.errorCode === '600019') {
                     if (Util.paramType(feildValue) == 'String' && feildValue.length > 500) {
                         obj[key] = Util.stringSlice(feildValue, 499) + '$'
+
                     } else {
                         obj[key] = feildValue
                     }
@@ -241,6 +250,10 @@ function checkPrivate (obj, ruleName, isKey, keyName) {
         }
         for (var key in obj) {
             var status = checkFields(key, obj[key], rule);
+            // 循环 obj,假如包含关键字，把关键字的值，全部回复成默认初始值。
+            if (key == "$lib" || key == "$lib_version" || key == "$platform") {
+                obj[key] = baseConfig.base[key];
+            }
             if (!status) {
                 if (baseConfig.status.errorCode === '600019') {
                     if (obj[key].length > 500) {

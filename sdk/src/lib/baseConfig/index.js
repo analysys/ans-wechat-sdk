@@ -3,8 +3,8 @@ export default {
     "base": {
         "appid": "",
         "$debug": 0,
-        "$lib_version": "4.3.0",
-        "$lib": "WeChat",
+        "$lib_version": "$LibVERSION",
+        "$lib": "$LIB",
         "uploadURL": "",
         "auto": true,
         "autoProfile": true,

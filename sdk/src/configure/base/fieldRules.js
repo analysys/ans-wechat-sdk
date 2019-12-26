@@ -29,6 +29,7 @@ import {
     getScreenHeight,
     getOs,
     getBrand,
+    getBrower,
     getBrowerVersion,
     getOsVersion,
     getModel,
@@ -110,7 +111,7 @@ export default {
     "xcontext": {
         "$lib": {
             "valueType": 1,
-            "value": "WeChat"
+            "value": "$LIB"
         },
         "$lib_version": {
             "valueType": 0,
@@ -122,7 +123,7 @@ export default {
         },
         "$platform": {
             "valueType": 1,
-            "value": "WeChat"
+            "value": "$LIB"
         },
         "$debug": {
             "valueType": 0,
@@ -164,11 +165,8 @@ export default {
             }
         },
         "$browser": {
-            "valueType": 1,
-            "value": "WeChat",
-            "check": {
-                "value": ["isString"]
-            }
+            "valueType": 0,
+            "value": getBrower
         },
         "$brand": {
             "valueType": 0,

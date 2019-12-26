@@ -4,7 +4,7 @@ import storage from '../../lib/storage/index'
 import { resetCode, checkPrivate } from '../../lib/fillFiled/index'
 import { temp } from '../../lib/mergeRules/index'
 import { fillField } from '../../lib/fillFiled/index'
-import { sendData } from '../../ProgramDiff/Common/upload/index'
+import { sendData } from '../../lib/upload/index'
 
 function track (eventName, obj) {
     baseConfig.status.FnName = eventName;

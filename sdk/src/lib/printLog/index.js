@@ -61,7 +61,7 @@ var successMessage = {
         "数据将会进行时间校准"
 }
 
-function successLog (msg) {
+function successLog(msg) {
     if (baseConfig.base.$debug === 1 || baseConfig.base.$debug === 2) {
         var status = baseConfig.status
         var successCode = status.successCode
@@ -86,7 +86,7 @@ function successLog (msg) {
     }
 }
 
-function errorLog () {
+function errorLog() {
     var status = baseConfig.status;
     var errorCode = status.errorCode;
     var fn = status.FnName;
@@ -106,4 +106,7 @@ function errorLog () {
     }
 }
 
-export { errorLog, successLog }
+export {
+    errorLog,
+    successLog
+}

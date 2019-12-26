@@ -1,98 +1,70 @@
-import Util from '../common/index'
-
-let getStoragePromise = function (name) {
-    return new Promise(function (resolve, reject) {
-        try {
-            let value = wx.getStorageSync(name)
-            if (value) {
-                resolve(value)
-            }
-        } catch (e) {
-            wx.getStorage({
-                key: name,
-                success: function (res) {
-                    resolve(res.data)
-                },
-                fail: function (res) {
-                    reject(res)
-                }
-            })
-        }
-    }).catch((e) => {
-    })
-}
-let setStoragePromise = function (name, value) {
-    return new Promise(function (resolve, reject) {
-        let val = value
-        try {
-            wx.setStorageSync(name, val)
-            resolve(200)
-        } catch (e) {
-            wx.setStorage({
-                key: name,
-                data: val,
-                success: function () {
-                    resolve(200)
-                },
-                fail: function () {
-                    reject(400)
-                }
-            })
-        }
-    }).catch((e) => { })
-}
+import PublicApp from '../common/publicApp.js'
+let getStoragePromise = PublicApp.Storage.getStoragePromise
+let setStoragePromise = PublicApp.Storage.setStoragePromise
 class storage {
     constructor() {
         this.local = {}
-        getStoragePromise('FZ_STROAGE').then((value) => {
-            if (value.constructor === String) {
-                value = JSON.parse(value)
-            }
-            this.local = Util.objMerge(value, this.local) || {}
-            setStoragePromise("FZ_STROAGE", this.local).then(() => {
+        this.Session = {}
+        this.localStatus = false
+        this.getStoragePromise = PublicApp.Storage.getStoragePromise
+    }
+    initLocalData() {
 
-            }, (e) => {
-            }).catch((e) => {
-            })
+        return getStoragePromise('FZ_STROAGE').then((value) => {
+            if (this.localStatus) {
+                return
+            }
+            this.localStatus = true
+            if (!value) {
+                value = {}
+            }
+
+            if (typeof value == 'string') {
+                try {
+                    value = JSON.parse(value)
+                } catch (e) {
+                    value = {}
+                }
+            }
+            this.local = Object.assign(value, this.local)
+
+            setStoragePromise("FZ_STROAGE", this.local).then(() => { }, (e) => { }).catch((e) => { })
 
         }, () => {
             this.local = {}
         }).catch((e) => { })
-        this.Session = {}
     }
-    setData (name, value) {
+    setData(name, value) {
         this.Session[name] = value
     }
-    getData (name) {
+    getData(name) {
+
         return this.Session[name] === "undefind" ? "" : this.Session[name]
     }
-    removeData (name) {
+    removeData(name) {
         if (this.Session[name] !== "undefind") {
             delete this.Session[name]
         }
     }
-    clearData () {
+    clearData() {
         this.Session = {}
     }
-    setLocal (name, val) {
+    setLocal(name, val) {
         this.local[name] = val
         let value = this.local
         setStoragePromise("FZ_STROAGE", value).then(() => {
 
-        }, (e) => {
-        }).catch((e) => {
-        })
+        }, (e) => { }).catch((e) => { })
     }
-    getLocal (name) {
+    getLocal(name) {
         return this.local[name]
     }
-    removeLocal (name) {
+    removeLocal(name) {
         if (this.local[name] !== "undefind") {
             delete this.local[name]
             let value = this.local
             setStoragePromise("FZ_STROAGE", value).then(() => {
-            }, () => {
-            }).catch((e) => { })
+            }, () => { }).catch((e) => { })
         }
     }
 }

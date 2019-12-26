@@ -4,6 +4,9 @@ import { errorLog, successLog } from './lib/printLog/index';
 import { resetCode } from './lib/fillFiled/index';
 import { API } from './API/index';
 
+import PublicApp from './lib/common/publicApp.js'
+let getPublicApp = PublicApp.getPublicApp
+
 baseConfig.isStartUp = true;
 baseConfig.base.auto = false;
 
@@ -132,6 +135,9 @@ class Ark_PASS_SDK extends API {
 
 let ark_sdk = new Ark_PASS_SDK();
 delete ark_sdk.startUp;
-wx.AnalysysAgent = ark_sdk;
 
+let publicApp = getPublicApp()
+if (publicApp) {
+    publicApp.AnalysysAgent = ark_sdk;
+}
 export default ark_sdk

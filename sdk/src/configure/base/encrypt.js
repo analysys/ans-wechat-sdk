@@ -4,13 +4,15 @@ import ecb from 'crypto-js/mode-ecb'
 import pako from 'pako'
 import base64js from 'base64-js'
 import MD5 from "../../lib/common/MD5"
-import storage from '../../lib/storage/index'
-import { encode } from '../../lib/common/Base64'
+import {
+    encode
+} from '../../lib/common/Base64'
 
 
 // 小程序真机 不支持 stob 方法。所以重写这个方法
 var base64hash = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-function atob (s) {
+
+function atob(s) {
     s = s.replace(/\s|=/g, '');
     var cur,
         prev,
@@ -43,10 +45,12 @@ function atob (s) {
 
 
 // 增加解编码方法，放在加密模块里，反正已经引加密方法了，再多点代码无所谓了。解加密，先base64，后gzib。
-function decodeRes (b64Data) {
+function decodeRes(b64Data) {
     var strData = atob(b64Data);
     // Convert binary string to character-number array
-    var charData = strData.split('').map(function (x) { return x.charCodeAt(0); });
+    var charData = strData.split('').map(function (x) {
+        return x.charCodeAt(0);
+    });
     // Turn number array into byte-array
     var binData = new Uint8Array(charData);
     // unzip
@@ -59,14 +63,15 @@ function decodeRes (b64Data) {
 
 let reqt = ''
 
-function getSpv (lib, appid, lib_version) {
+function getSpv(lib, appid, lib_version) {
     let policyversion = ''
     let appversion = ''
     let spv = lib + '|' + appid + '|' + lib_version + '|' + policyversion + '|' + appversion
     return encodeURIComponent(encode(spv))
 }
-function encryptKey (lib, appid, lib_version) {
-    reqt = +new Date() + (storage.getLocal("ANSSERVERTIME") ? Number(storage.getLocal("ANSSERVERTIME")) : 0)
+
+function encryptKey(lib, appid, lib_version) {
+    reqt = +new Date()
     let orgkey = lib + appid + lib_version + reqt
     //MD5+base64+切割为数组
     let base64Str = encode(MD5(new String(orgkey), 32).toUpperCase()).split('')
@@ -93,22 +98,28 @@ function encryptKey (lib, appid, lib_version) {
     }
     return key.slice(0, 16)
 }
-function getEncryptData (data, lib, appid, lib_version, encryptType) {
+
+function getEncryptData(data, lib, appid, lib_version, encryptType) {
     let key = encryptKey(lib, appid, lib_version)
     key = encUtf8.parse(key);
     let encryptData = ''
     if (encryptType === 1) {
-        encryptData = aes.encrypt(data, key, { mode: ecb })
+        encryptData = aes.encrypt(data, key, {
+            mode: ecb
+        })
     }
     if (encryptType === 2) {
         var iv = encUtf8.parse('Analysys_315$CBC');
-        encryptData = aes.encrypt(data, key, { iv: iv });
+        encryptData = aes.encrypt(data, key, {
+            iv: iv
+        });
     }
     encryptData = encryptData.ciphertext.toString().toUpperCase()
     let pakoZip = pako.gzip(encryptData)
     return base64js.fromByteArray(pakoZip);
 }
-function uploadData (option) {
+
+function uploadData(option) {
     if (option.encryptType != 1 && option.encryptType != 2) {
         return option;
     };

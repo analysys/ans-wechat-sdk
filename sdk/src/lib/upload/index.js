@@ -1,11 +1,16 @@
-import Util from "../../../lib/common/index";
-import baseConfig from "../../../lib/baseConfig/index"
-import { errorLog, successLog } from '../../../lib/printLog/index'
-import { resetCode } from '../../../lib/fillFiled/index';
-import storage from "../../../lib/storage/index";
-
-
-
+import Util from "../common/index";
+import baseConfig from "../baseConfig/index"
+import {
+    errorLog,
+    successLog
+} from '../printLog/index'
+import {
+    resetCode
+} from '../fillFiled/index';
+import storage from "../storage/index";
+import PublicApp from '../common/publicApp.js'
+let publicApp = PublicApp.getPublicApp
+let request = PublicApp.Fetch.request
 var postStatus = true;
 
 function checkLogBaseJson (obj) {
@@ -61,15 +66,15 @@ function sendPost (upData) {
         encryptType: baseConfig.base.encryptType
     }
     // 过滤方法  假如有加密 将返回 加密后的 url 及 upData;
-    if (wx.AnalysysAgent.encrypt && Util.paramType(wx.AnalysysAgent.encrypt.uploadData) == "Function") {
-        option = wx.AnalysysAgent.encrypt.uploadData(option);
+    if (publicApp().AnalysysAgent.encrypt && Util.paramType(publicApp().AnalysysAgent.encrypt.uploadData) == "Function") {
+        option = publicApp().AnalysysAgent.encrypt.uploadData(option);
     }
     // 打印上传 数据 Data,打印上报 地址 uploadUrl
     baseConfig.status.key = option.url;
     baseConfig.status.value = JSON.stringify(upData);
     baseConfig.status.successCode = "20012";
     successLog();
-    wx.request({
+    request({
         url: option.url,
         method: 'POST',
         data: JSON.stringify(option.data),
@@ -86,8 +91,8 @@ function sendPost (upData) {
             // };
             // 判断是不是加密的，根据字符串判断，（假如解密会是包增大）
             if (Util.paramType(res.data) == "String") {
-                if (wx.AnalysysAgent.encrypt && Util.paramType(wx.AnalysysAgent.encrypt.decodeRes) == "Function") {
-                    res.data = JSON.parse(wx.AnalysysAgent.encrypt.decodeRes(res.data));
+                if (publicApp().AnalysysAgent.encrypt && Util.paramType(publicApp().AnalysysAgent.encrypt.decodeRes) == "Function") {
+                    res.data = JSON.parse(publicApp().AnalysysAgent.encrypt.decodeRes(res.data));
                 } else if (res.data == "H4sIAAAAAAAAAKtWSs5PSVWyMjIwqAUAVAOW6gwAAAA=") {
                     res.data = {
                         "code": 200

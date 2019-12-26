@@ -3,39 +3,86 @@ import Util from '../../lib/common/index'
 import storage from '../../lib/storage/index'
 import sessionId from '../../lib/fillFiled/sessionId'
 import id from '../../lib/fillFiled/id'
-import { temp } from '../../lib/mergeRules/index'
-import { fillField } from '../../lib/fillFiled/index'
-import { resetCode } from '../../lib/fillFiled/index'
-import { sendData } from '../../ProgramDiff/Common/upload/index'
-import { setFirstProfile } from './setFirstProfile'
-import { pageView } from './pageView';
+import {
+    temp
+} from '../../lib/mergeRules/index'
+import {
+    fillField
+} from '../../lib/fillFiled/index'
+import {
+    resetCode
+} from '../../lib/fillFiled/index'
+import {
+    sendData
+} from '../../lib/upload/index'
+import {
+    setFirstProfile
+} from './setFirstProfile'
+import {
+    pageView
+} from './pageView';
+import {
+    UTM
+} from '../../lib/fillFiled/UTM'
 
-function startUp () {
-    baseConfig.isStartUp = true;
-    baseConfig.status.FnName = '$startup'
-    resetCode()
+import PublicApp from '../../lib/common/publicApp.js'
+let setPublicApp = PublicApp.setPublicApp
+
+function setOptions (options) {
+    let option = options
+    if (options && options._status == "create") {
+        setPublicApp(options)
+        option = options.options
+    }
+    // 存在参数的 utm 赋值
+    if (option.query && Object.keys(option.query).length > 0) {
+        if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
+            UTM.utm_campaign_id = option.query.campaign_id;
+            UTM.utm_campaign = option.query.utm_campaign;
+            UTM.utm_content = option.query.utm_content;
+            UTM.utm_medium = option.query.utm_medium;
+            UTM.utm_source = option.query.utm_source;
+            UTM.utm_term = option.query.utm_term;
+        }
+        // 关于分享的赋值引用
+        if (option.query.share_id && option.query.share_level && option.query.share_path) {
+            baseConfig.base.$share_id = option.query.share_id;
+            baseConfig.base.$share_level = option.query.share_level;
+            baseConfig.base.$share_path = decodeURIComponent(option.query.share_path);
+        }
+    }
+    // 更新场景值，从分享进去等操作。
+    if (option.scene) {
+        baseConfig.system.scene = options.scene;
+    }
+}
+function startUp (options) {
+    if (options) {
+        setOptions(options)
+    }
     let appid = storage.getLocal('ARKAPPID');
     let debug = storage.getLocal('ARKDEBUG');
-    let uploadUrl = storage.getLocal('ARKUPLOADURL');
-    if (appid !== baseConfig.base.appid || (debug === 1 && debug !== baseConfig.base.$debug) || uploadUrl !== baseConfig.base.uploadURL) {
+    let uploadURL = storage.getLocal('ARKUPLOADURL');
+    if (appid && Util.paramType(debug) == 'Number' && uploadURL && (appid !== baseConfig.base.appid || (debug === 1 && debug !== baseConfig.base.$debug) || uploadURL !== baseConfig.base.uploadURL)) {
         // 数据变化
-        Util.delFristDay()
-        Util.delFristTime()
-        if (appid != undefined) {   //appid 真的变更。
-            id.removeTrackId();
-            storage.removeLocal("ARKFRISTPROFILE"); //变更之后重新清除 ARKFRISTPROFILE。不然profile_set_once 不会上传
-            storage.removeLocal("ARKFRISTPROFILESEND"); //这是发送的标志
-            id.removeLoginId();
-        }
-        storage.removeLocal('ARKSUPER')
-        storage.setData("STARTUP", true)
-        storage.removeData("STARTUPTIME");
-        if (!baseConfig.base.allowTimeCheck) {
-            storage.removeLocal("ANSSERVERTIME")
-        }
-        storage.removeLocal("POSTDATA");  //变更 删除缓存数据 
-        Util.setFristDay()
-        Util.setFristTime();
+        Util.delFristDay() //清除首天时间
+        Util.delFristTime()//清除首次时间
+        storage.removeLocal("ARKFRISTPROFILE"); //清除首次启动时间
+        storage.removeLocal("ARKFRISTPROFILESEND"); //清除发送首次用户属性
+
+        id.removeLoginId(); //清除登录ID
+        id.removeTrackId();//清除手动设置设备ID
+        storage.removeLocal("ARK_TRACK_LOGIN") //清除identity登录状态
+
+        storage.removeLocal('ARKSUPER')//清除超级属性
+        storage.removeData("STARTUP")//清除启动记录
+        storage.removeData("STARTUPTIME");//清除启动时间
+        storage.removeLocal("POSTDATA"); //变更 删除缓存数据 
+    }
+    Util.setFristDay()
+    Util.setFristTime();
+    if (!baseConfig.base.allowTimeCheck) {
+        storage.removeLocal("ANSSERVERTIME")
     }
     storage.setLocal('ARKDEBUG', baseConfig.base.$debug)
     storage.setLocal('ARKAPPID', baseConfig.base.appid);
@@ -47,7 +94,17 @@ function startUp () {
         }
         return
     };
-    sessionId.setId();   //设置sessionID 和 sessionDate
+    // 跑一遍FnSuperCatch，保证startup 之前的操作的超级属性，跟随startup 上报。
+    let FnSuperCatch = baseConfig.FnSuperCatch;
+    for (var i = 0; i < FnSuperCatch.length; i++) {
+        // wx.AnalysysAgent[FnCatch[i][0]].call(wx.AnalysysAgent[FnCatch[i][0]], ...FnCatch[i][1]);
+        FnSuperCatch[i][0].apply(FnSuperCatch[i][0], FnSuperCatch[i][1]);
+    };
+    baseConfig.FnSuperCatch = [];
+    baseConfig.isStartUp = true;
+    baseConfig.status.FnName = '$startup'
+    resetCode()
+    sessionId.setId(); //设置sessionID 和 sessionDate
     storage.setData("STARTUP", false);
     // 上传字段表 
     let startUpTemp = temp('$startup');
@@ -57,13 +114,7 @@ function startUp () {
     if (!storage.getLocal('ARKFRISTPROFILE')) {
         storage.setLocal('ARKFRISTPROFILE', Util.format(new Date(res.xwhen), 'yyyy-MM-dd hh:mm:ss.SSS'));
     }
-    // 跑一遍FnSuperCatch，保证startup 之前的操作的超级属性，跟随startup 上报。
-    let FnSuperCatch = baseConfig.FnSuperCatch;
-    for (var i = 0; i < FnSuperCatch.length; i++) {
-        // wx.AnalysysAgent[FnCatch[i][0]].call(wx.AnalysysAgent[FnCatch[i][0]], ...FnCatch[i][1]);
-        FnSuperCatch[i][0].apply(FnSuperCatch[i][0], FnSuperCatch[i][1]);
-    };
-    baseConfig.FnSuperCatch = [];
+
     //其中 pageview  track  startup要合并超级属性 
     let arkSuper = storage.getLocal("ARKSUPER") || {};
     res.xcontext = Util.objMerge(res.xcontext, arkSuper);
@@ -71,7 +122,7 @@ function startUp () {
     res.xcontext = Util.objMerge(res.xcontext, appProperty)
     storage.setData("STARTUPTIME", Util.format(new Date(res.xwhen), 'yyyy-MM-dd hh:mm:ss.SSS'));
     if (baseConfig.base.autoProfile != true && baseConfig.base.auto != true) {
-        sendData(Util.delEmpty(res));
+        sendData(res);
     } else {
         // 存储到 POSTDATA; 假如采集首次属性 一起发，没有就在发送。此时的res 需要变成数组 存进 POSTDATA;
         let ARKPOST = storage.getLocal("POSTDATA") || [];

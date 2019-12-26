@@ -71,6 +71,7 @@ class Util {
     }
     isFristTime () {
         let fristTime = storage.getLocal("FRISTIME") !== false ? true : false
+        console.log(fristTime)
         if (fristTime) {
             storage.setLocal("FRISTIME", false)
         }
@@ -83,6 +84,7 @@ class Util {
         return true;
     }
     setFristDay () {
+        if (this.paramType(storage.getLocal("FRISTDAY")) === 'Boolean') return
         let timeDay = this.format(new Date(), 'yyyyMMdd');
         if (baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
             timeDay = this.format(new Date(+new Date() + (storage.getLocal("ANSSERVERTIME") ? Number(storage.getLocal("ANSSERVERTIME")) : 0)), 'yyyyMMdd')
@@ -90,6 +92,7 @@ class Util {
         storage.setLocal("FRISTDAY", timeDay);
     }
     setFristTime () {
+        if (this.paramType(storage.getLocal("FRISTIME")) === 'Boolean') return
         storage.setLocal("FRISTIME", true)
     }
     delFristDay () {
@@ -249,6 +252,9 @@ class Util {
         let objArray = [];
         objArray.push(obj);
         return objArray;
+    }
+    stringSlice (str, length) {
+        return str.slice(0, length);
     }
 }
 

@@ -1,13 +1,16 @@
-import baseConfig from '../../../lib/baseConfig/index'
-import storage from '../../../lib/storage/index'
-import { successLog } from '../../../lib/printLog/index'
-import Util from '../../../lib/common/index'
-import { resetCode } from '../../../lib/fillFiled/index'
-
-
-
-let checkTimePromise = function (name) {
-    return new Promise(function (resolve, reject) {
+import baseConfig from '../baseConfig/index'
+import storage from '../storage/index'
+import {
+    successLog
+} from '../printLog/index'
+import Util from '../common/index'
+import {
+    resetCode
+} from '../fillFiled/index'
+import PublicApp from '../common/publicApp.js'
+let request = PublicApp.Fetch.request
+let checkTimePromise = function () {
+    return new Promise(function (resolve) {
         resetCode();
         if (!baseConfig.base.allowTimeCheck) {
             return resolve()
@@ -15,20 +18,22 @@ let checkTimePromise = function (name) {
         // 上报url 进行拆分，不带up。
         let uploadURL = baseConfig.base.uploadURL;
         uploadURL = uploadURL.split('up')[0];
-        wx.request({
+        request({
             url: uploadURL + "configure",
             method: 'GET',
             success: function (res) {
                 resolve(res)
                 // 返回成功后 更改标识
-                if (res.header && res.header.Date) {
+                let header = res.header || res.headers
+                if (header && header.Date) {
                     let time = +new Date()
-                    let date = res.header.Date;
+                    let date = header.Date;
                     // 获取最大允许误差，看看是否要进行时间校准  
                     let maxDiffData = baseConfig.base.maxDiffTimeInterval;
                     if (maxDiffData < 0) {
                         maxDiffData = 30;
                     }
+
                     if (date && maxDiffData < Math.abs((+new Date(date) - time) / 1000)) {
                         // 打印日志
                         if (!baseConfig.base.logflag) {
@@ -50,7 +55,9 @@ let checkTimePromise = function (name) {
         })
 
 
-    }).catch((e) => { })
+    }).catch((e) => {
+
+    })
 }
 
 export {

@@ -3,14 +3,10 @@ import Util from './lib/common/index';
 import { errorLog, successLog } from './lib/printLog/index';
 import { resetCode } from './lib/fillFiled/index';
 import { API } from './API/index';
-import { startUp } from './API/template/startUp';
 import { share } from './API/template/share'
-import { UTM } from './lib/fillFiled/UTM'
-
 
 let arkApp = App;
 let arkPage = Page;
-
 
 class Ark_PASS_SDK extends API {
     constructor() {
@@ -147,39 +143,12 @@ class Ark_PASS_SDK extends API {
         return baseConfig.base.maxDiffTimeInterval;
     }
     App (app) {
-        appFn(app, 'onShow', function (options) {
-            baseConfig.system.scene = options;
-            let scene = options;
-            // 存在参数的 utm 赋值
-            if (Object.keys(scene.query).length > 0) {
-                if (scene.query.utm_campaign && scene.query.utm_medium && scene.query.utm_source) {
-                    UTM.utm_campaign_id = scene.query.campaign_id;
-                    UTM.utm_campaign = scene.query.utm_campaign;
-                    UTM.utm_content = scene.query.utm_content;
-                    UTM.utm_medium = scene.query.utm_medium;
-                    UTM.utm_source = scene.query.utm_source;
-                    UTM.utm_term = scene.query.utm_term;
-                }
-                // 关于分享的赋值引用
-                if (scene.query.share_id && scene.query.share_level && scene.query.share_path) {
-                    baseConfig.base.$share_id = scene.query.share_id;
-                    baseConfig.base.$share_level = scene.query.share_level;
-                    baseConfig.base.$share_path = decodeURIComponent(scene.query.share_path);
-                }
-            }
-            // 更新场景值，从分享进去等操作。
-            if (options.scene) {
-                // if (baseConfig.system.scene) {
-                baseConfig.system.scene.scene = options.scene;
-                // }
-            }
-        })
+        appFn(app, 'onShow', ark_sdk.startUp)
         arkApp(app)
     }
 
     // 小程序的初始 onLunch 更改在 类里面；
     Page (page) {
-        appFn(page, 'onShow', ark_sdk.startUp);
         if (baseConfig.base.autoShare == true) {
             appFn(page, 'onShareAppMessage', share);
         }

@@ -13,7 +13,7 @@ class idObj {
     }
     setId () {
         let timeRandom = new String(new Date().getTime()) + new String(Math.random() * 10000);
-        return 'WX' + MD5(new String(timeRandom), 32) + MD5(new String(timeRandom), 32).slice(0, 4)
+        return '$ANS' + MD5(new String(timeRandom), 32) + MD5(new String(timeRandom), 32).slice(0, 4)
         // return 'WX' + new String(timeRandom).MD5(32) + new String(timeRandom).MD5(32).slice(0, 4);
     }
     jsId () {

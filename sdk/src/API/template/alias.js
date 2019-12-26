@@ -1,13 +1,24 @@
 import baseConfig from '../../lib/baseConfig/index'
 import Util from '../../lib/common/index'
 import storage from '../../lib/storage/index'
-import { resetCode, checkPrivate } from '../../lib/fillFiled/index'
-import { temp } from '../../lib/mergeRules/index'
-import { fillField } from '../../lib/fillFiled/index'
-import { sendData } from '../../ProgramDiff/Common/upload/index'
-import { setFirstProfile } from './setFirstProfile'
+import {
+    resetCode,
+    checkPrivate
+} from '../../lib/fillFiled/index'
+import {
+    temp
+} from '../../lib/mergeRules/index'
+import {
+    fillField
+} from '../../lib/fillFiled/index'
+import {
+    sendData
+} from '../../lib/upload/index'
+import {
+    setFirstProfile
+} from './setFirstProfile'
 
-function alias (aliasId) {
+function alias(aliasId) {
     baseConfig.status.FnName = '$alias'
     resetCode()
     var status = true;
@@ -40,4 +51,4 @@ function alias (aliasId) {
 
 export {
     alias
-} 
+}
