@@ -1,6 +1,6 @@
 {
     "name": "test-ans-wechat-sdk",
-    "version": "1.0.0",
+    "version": "3.0.0",
     "description": "This is the offical wechat SDK for Analysys.",
     "main": "SDK/AnalysysAgent_WX_SDK.custom.min.js",
     "scripts": {
