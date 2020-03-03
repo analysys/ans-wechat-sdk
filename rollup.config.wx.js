@@ -44,7 +44,7 @@ export default [{
         })]
     },
     {
-        file: './SDK/AnalysysAgent_WX_SDK.min.js',
+        file: './sdk/AnalysysAgent_WX_SDK.min.js',
         format: 'cjs',
         name: 'Ans',
         plugins: [uglify({
@@ -63,7 +63,7 @@ export default [{
             }
         })]
     }, {
-        file: './SDK/AnalysysAgent_WX_SDK.es6.min.js',
+        file: './sdk/AnalysysAgent_WX_SDK.es6.min.js',
         format: 'esm',
         name: 'Ans',
         plugins: [terser({
@@ -107,7 +107,7 @@ export default [{
         })]
     },
     {
-        file: './SDK/AnalysysAgent_WX_SDK.plugin.min.js',
+        file: './sdk/AnalysysAgent_WX_SDK.plugin.min.js',
         format: 'cjs',
         name: 'Ans',
         plugins: [uglify({
@@ -127,7 +127,7 @@ export default [{
         })]
     },
     {
-        file: './SDK/AnalysysAgent_WX_SDK.plugin.es6.min.js',
+        file: './sdk/AnalysysAgent_WX_SDK.plugin.es6.min.js',
         format: 'esm',
         name: 'Ans',
         plugins: [terser({
@@ -171,7 +171,7 @@ export default [{
         })]
     },
     {
-        file: './SDK/AnalysysAgent_WX_SDK.custom.min.js',
+        file: './sdk/AnalysysAgent_WX_SDK.custom.min.js',
         format: 'cjs',
         name: 'Ans',
         plugins: [uglify({
@@ -191,7 +191,7 @@ export default [{
         })]
     },
     {
-        file: './SDK/AnalysysAgent_WX_SDK.custom.es6.min.js',
+        file: './sdk/AnalysysAgent_WX_SDK.custom.es6.min.js',
         format: 'esm',
         name: 'Ans',
         plugins: [terser({

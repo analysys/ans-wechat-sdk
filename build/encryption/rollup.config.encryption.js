@@ -42,7 +42,7 @@ export default [{
                 }
             })]
         }, {
-            file: './SDK/AnalysysAgent_encryption.min.js',
+            file: './sdk/AnalysysAgent_encryption.min.js',
             format: 'cjs',
             name: 'Ans',
             plugins: [uglify({
@@ -79,7 +79,7 @@ export default [{
             })]
         },
         {
-            file: './SDK/AnalysysAgent_encryption.es6.min.js',
+            file: './sdk/AnalysysAgent_encryption.es6.min.js',
             format: 'esm',
             name: 'Ans',
             plugins: [terser({

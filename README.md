@@ -11,13 +11,13 @@
       // 非es6 
       var AnalysysAgent = require("ans-wechat-sdk");
       // 小程序提供了加密模块 根据自己需要引入
-      var AnalysysEncryption = require('ans-wechat-sdk/src/AnalysysAgent_encryption.min');
+      var AnalysysEncryption = require('ans-wechat-sdk/sdk/AnalysysAgent_encryption.min');
       // sdk 与 加密模块关联
       AnalysysAgent.encrypt = AnalysysEncryption;
 
       // es6 
       import AnalysysAgent from "ans-wechat-sdk"
-      import AnalysysEncryption  from 'ans-wechat-sdk/src/AnalysysAgent_encryption.min';
+      import AnalysysEncryption  from 'ans-wechat-sdk/sdk/AnalysysAgent_encryption.min';
       AnalysysAgent.encrypt = AnalysysEncryption;
 
 
