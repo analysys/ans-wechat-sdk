@@ -1,12 +1,13 @@
 {
-    "name": "ans-wechat-sdk",
-    "version": "0.1.0",
-    "description": "",
-    "main": "index.js",
+    "name": "test-ans-wechat-sdk",
+    "version": "1.0.0",
+    "description": "This is the offical wechat SDK for Analysys.",
+    "main": "SDK/AnalysysAgent_WX_SDK.custom.min.js",
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c --watch",
-        "wx.watch": "rollup --config rollup.config.wx.js --watch"
+        "wx.watch": "rollup --config rollup.config.wx.js --watch",
+        "encryption": "rollup --config ./build/encryption/rollup.config.encryption.js --watch"
     },
     "jest": {
         "setupFiles": [
@@ -15,7 +16,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git@github.com/analysys/ans-wechat-sdk.git"
+        "url": "git+https://github.com/analysys/ans-wechat-sdk.git"
     },
     "author": "wangmingjia@analysys.com.cn",
     "license": "ISC",
@@ -50,5 +51,18 @@
         "rollup-watch": "^4.3.1",
         "vue-cli": "^2.9.6",
         "zlibjs": "^0.3.1"
+    },
+    "bugs": {
+        "url": "https://github.com/analysys/ans-wechat-sdk/issues"
+    },
+    "homepage": "https://github.com/analysys/ans-wechat-sdk#readme",
+    "keywords": [
+        "ans",
+        "analytics",
+        "sdk",
+        "wechat"
+    ],
+    "engines": {
+        "node": ">=6.0"
     }
 }

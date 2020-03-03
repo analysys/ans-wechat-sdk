@@ -34,7 +34,7 @@ function changePath () {
 export default [{
     input: './src/main.js',
     output: [{
-        file: '../demo/demo/sdk/AnalysysAgent_WX_SDK.min.js',
+        file: './demo/demo/sdk/AnalysysAgent_WX_SDK.min.js',
         format: 'cjs',
         name: 'Ans',
         plugins: [uglify({
@@ -44,7 +44,26 @@ export default [{
         })]
     },
     {
-        file: '../demo/demo/sdk/AnalysysAgent_WX_SDK.es6.min.js',
+        file: './SDK/AnalysysAgent_WX_SDK.min.js',
+        format: 'cjs',
+        name: 'Ans',
+        plugins: [uglify({
+            'mangle': {
+                toplevel: true
+            }
+        })]
+    },
+    {
+        file: './demo/demo/sdk/AnalysysAgent_WX_SDK.es6.min.js',
+        format: 'esm',
+        name: 'Ans',
+        plugins: [terser({
+            'mangle': {
+                toplevel: true
+            }
+        })]
+    }, {
+        file: './SDK/AnalysysAgent_WX_SDK.es6.min.js',
         format: 'esm',
         name: 'Ans',
         plugins: [terser({
@@ -78,7 +97,7 @@ export default [{
 }, {
     input: './src/main_plugin.js',
     output: [{
-        file: '../demo/demoPlugin/sdk/AnalysysAgent_WX_SDK.plugin.min.js',
+        file: './demo/demoPlugin/sdk/AnalysysAgent_WX_SDK.plugin.min.js',
         format: 'cjs',
         name: 'Ans',
         plugins: [uglify({
@@ -88,7 +107,27 @@ export default [{
         })]
     },
     {
-        file: '../demo/demoPlugin/sdk/AnalysysAgent_WX_SDK.plugin.es6.min.js',
+        file: './SDK/AnalysysAgent_WX_SDK.plugin.min.js',
+        format: 'cjs',
+        name: 'Ans',
+        plugins: [uglify({
+            'mangle': {
+                toplevel: true
+            }
+        })]
+    },
+    {
+        file: './demo/demoPlugin/sdk/AnalysysAgent_WX_SDK.plugin.es6.min.js',
+        format: 'esm',
+        name: 'Ans',
+        plugins: [terser({
+            'mangle': {
+                toplevel: true
+            }
+        })]
+    },
+    {
+        file: './SDK/AnalysysAgent_WX_SDK.plugin.es6.min.js',
         format: 'esm',
         name: 'Ans',
         plugins: [terser({
@@ -122,7 +161,7 @@ export default [{
 }, {
     input: './src/main_custom.js',
     output: [{
-        file: '../demo/demoTaro/sdk/AnalysysAgent_WX_SDK.custom.min.js',
+        file: './demo/demoTaro/sdk/AnalysysAgent_WX_SDK.custom.min.js',
         format: 'cjs',
         name: 'Ans',
         plugins: [uglify({
@@ -132,7 +171,27 @@ export default [{
         })]
     },
     {
-        file: '../demo/demoTaro/sdk/AnalysysAgent_WX_SDK.custom.es6.min.js',
+        file: './SDK/AnalysysAgent_WX_SDK.custom.min.js',
+        format: 'cjs',
+        name: 'Ans',
+        plugins: [uglify({
+            'mangle': {
+                toplevel: true
+            }
+        })]
+    },
+    {
+        file: './demo/demoTaro/sdk/AnalysysAgent_WX_SDK.custom.es6.min.js',
+        format: 'esm',
+        name: 'Ans',
+        plugins: [terser({
+            'mangle': {
+                toplevel: true
+            }
+        })]
+    },
+    {
+        file: './SDK/AnalysysAgent_WX_SDK.custom.es6.min.js',
         format: 'esm',
         name: 'Ans',
         plugins: [terser({

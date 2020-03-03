@@ -1,0 +1,11 @@
+.github/
+build/
+demo/
+node_modules/
+src/
+.babelrc
+.gitignore
+LICENES
+package-lock.json
+package.json
+rollup.config.wx.js
