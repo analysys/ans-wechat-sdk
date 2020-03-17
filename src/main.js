@@ -162,8 +162,10 @@ function appFn (obj, Fn, toFn) {
             }
         }
     } else {
-        obj[Fn] = function (t) {
-            toFn(t);
+        if (Fn !== "onShareAppMessage") {
+            obj[Fn] = function (t) {
+                toFn(t);
+            }
         }
     }
 }
