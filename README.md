@@ -82,5 +82,4 @@
 [npm-url]: https://www.npmjs.com/package/ans-wechat-sdk
 [npm-image]: https://img.shields.io/npm/v/ans-wechat-sdk.svg?style=flat
 [npm-downloads]: https://img.shields.io/npm/dm/ans-wechat-sdk.svg?style=flat
-[npm-downloads]: http://img.shields.io/npm/dm/sa-sdk-node.svg?style=flat
 
