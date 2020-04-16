@@ -1,6 +1,7 @@
 //logs.js
 const app = getApp()
 let AnalysysAgent = wx.AnalysysAgent
+let Page = AnalysysAgent.Page
 
 Page({
   data: {},

@@ -1,12 +1,12 @@
 import baseConfig from './lib/baseConfig/index';
 import Util from './lib/common/index';
 import { errorLog, successLog } from './lib/printLog/index';
-import {
-    resetCode
-} from './lib/fillFiled/index';
-import {
-    API
-} from './API/index';
+import { resetCode } from './lib/fillFiled/index';
+import { API } from './API/index';
+
+import { UTM } from './lib/fillFiled/UTM'
+import PublicApp from './lib/common/publicApp.js'
+let setPublicApp = PublicApp.setPublicApp
 
 
 class Ark_PASS_SDK extends API {
@@ -178,12 +178,40 @@ wx.AnalysysAgent = ark_sdk;
 let APP = App;
 App = function (app) {
     // UTM 放在onshow ,保证小程序未被杀死，参数更改情况下重新获取。
-    appFn(app, 'onShow', ark_sdk.startUp)
+    appFn(app, 'onShow', function setOptions (options) {
+        let option = options
+        if (options && options._status == "create") {
+            setPublicApp(options)
+            option = options.options
+        }
+        // 存在参数的 utm 赋值
+        if (option.query && Object.keys(option.query).length > 0) {
+            if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
+                UTM.utm_campaign_id = option.query.campaign_id;
+                UTM.utm_campaign = option.query.utm_campaign;
+                UTM.utm_content = option.query.utm_content;
+                UTM.utm_medium = option.query.utm_medium;
+                UTM.utm_source = option.query.utm_source;
+                UTM.utm_term = option.query.utm_term;
+            }
+            // 关于分享的赋值引用
+            if (option.query.share_id && option.query.share_level && option.query.share_path) {
+                baseConfig.base.$share_id = option.query.share_id;
+                baseConfig.base.$share_level = option.query.share_level;
+                baseConfig.base.$share_path = decodeURIComponent(option.query.share_path);
+            }
+        }
+        // 更新场景值，从分享进去等操作。
+        if (option.scene) {
+            baseConfig.system.scene = options.scene;
+        }
+    })
     APP(app);
 };
 // 
 let PAGE = Page;
 Page = function (page) {
+    appFn(page, 'onShow', ark_sdk.startUp)
     if (baseConfig.base.autoShare == true) {
         appFn(page, 'onShareAppMessage', ark_sdk.share);
     }

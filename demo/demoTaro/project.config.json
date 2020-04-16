@@ -1,6 +1,6 @@
 {
 	"miniprogramRoot": "dist/",
-	"projectname": "myAppfei",
+	"projectname": "%E5%BC%80%E6%BA%90demoTaro",
 	"description": "demo",
 	"appid": "wx8e321e3470ac5c0b",
 	"setting": {

@@ -9,8 +9,8 @@ AnalysysAgent.encrypt = AnalysysEncryption;
 // AnalysysAgent.encrypt = AnalysysEncryption
 
 AnalysysAgent.debugMode = 2
-AnalysysAgent.appkey = '用户设置appKey'
-AnalysysAgent.uploadURL = '用户设置uploadURL'
+AnalysysAgent.appkey = 'sdktest201'
+AnalysysAgent.uploadURL = 'https://arkpaastest.analysys.cn:4089'
 AnalysysAgent.encryptType = 1;  // 使用加密模块就可以放开，设置加密模式的
 AnalysysAgent.autoShare = true;
 // AnalysysAgent.autoProfile = true;

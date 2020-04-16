@@ -21,7 +21,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.2.5",
 	"appid": "wx8e321e3470ac5c0b",
-	"projectname": "testPlugin",
+	"projectname": "%E5%BC%80%E6%BA%90demoPlugin",
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},

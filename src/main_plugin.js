@@ -5,6 +5,10 @@ import { resetCode } from './lib/fillFiled/index';
 import { API } from './API/index';
 import { share } from './API/template/share'
 
+import { UTM } from './lib/fillFiled/UTM'
+import PublicApp from './lib/common/publicApp.js'
+let setPublicApp = PublicApp.setPublicApp
+
 let arkApp = App;
 let arkPage = Page;
 
@@ -143,12 +147,40 @@ class Ark_PASS_SDK extends API {
         return baseConfig.base.maxDiffTimeInterval;
     }
     App (app) {
-        appFn(app, 'onShow', ark_sdk.startUp)
+        appFn(app, 'onShow', function setOptions (options) {
+            let option = options
+            if (options && options._status == "create") {
+                setPublicApp(options)
+                option = options.options
+            }
+            // 存在参数的 utm 赋值
+            if (option.query && Object.keys(option.query).length > 0) {
+                if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
+                    UTM.utm_campaign_id = option.query.campaign_id;
+                    UTM.utm_campaign = option.query.utm_campaign;
+                    UTM.utm_content = option.query.utm_content;
+                    UTM.utm_medium = option.query.utm_medium;
+                    UTM.utm_source = option.query.utm_source;
+                    UTM.utm_term = option.query.utm_term;
+                }
+                // 关于分享的赋值引用
+                if (option.query.share_id && option.query.share_level && option.query.share_path) {
+                    baseConfig.base.$share_id = option.query.share_id;
+                    baseConfig.base.$share_level = option.query.share_level;
+                    baseConfig.base.$share_path = decodeURIComponent(option.query.share_path);
+                }
+            }
+            // 更新场景值，从分享进去等操作。
+            if (option.scene) {
+                baseConfig.system.scene = options.scene;
+            }
+        })
         arkApp(app)
     }
 
     // 小程序的初始 onLunch 更改在 类里面；
     Page (page) {
+        appFn(page, 'onShow', ark_sdk.startUp)
         if (baseConfig.base.autoShare == true) {
             appFn(page, 'onShareAppMessage', share);
         }
