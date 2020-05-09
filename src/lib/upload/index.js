@@ -1,12 +1,7 @@
 import Util from "../common/index";
 import baseConfig from "../baseConfig/index"
-import {
-    errorLog,
-    successLog
-} from '../printLog/index'
-import {
-    resetCode
-} from '../fillFiled/index';
+import { errorLog, successLog } from '../printLog/index'
+import { resetCode } from '../fillFiled/index';
 import storage from "../storage/index";
 import PublicApp from '../common/publicApp.js'
 let publicApp = PublicApp.getPublicApp
@@ -31,6 +26,16 @@ function checkLogBaseJson (obj) {
 }
 
 function sendData (data) {
+    if (baseConfig.base.appid === "") {
+        baseConfig.status.errorCode = "60006";
+        errorLog();
+        return
+    }
+    if (baseConfig.base.uploadURL === "") {
+        baseConfig.status.errorCode = "60007";
+        errorLog();
+        return
+    }
     let postDataList = storage.getLocal("POSTDATA") || []
     let saveData = [];
     if (postDataList.length > 0) {

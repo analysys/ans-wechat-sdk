@@ -30,7 +30,7 @@ function getTitle () {
 
 function getReferer () {
     let pathArray = getCurrentPages()
-    if (pathArray.length > 1) {
+    if (pathArray.length > 1 && pathArray[pathArray.length - 2]) {
         return pathArray[pathArray.length - 2].__route__
     }
     return getScene()

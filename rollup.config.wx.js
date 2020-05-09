@@ -20,7 +20,7 @@ function changePath () {
                 .replace(/\@Router/g, pathResolve('./src/ProgramDiff/WX/router'))
                 .replace(/\$ANS/g, 'WX')
                 .replace(/\$LIB/g, 'WeChat')
-                .replace(/\$LibVERSION/g, '4.3.3');
+                .replace(/\$LibVERSION/g, '4.3.4');
             return {
                 code: code,
                 id: id

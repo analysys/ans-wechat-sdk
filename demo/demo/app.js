@@ -17,6 +17,8 @@ AnalysysAgent.autoShare = true;
 AnalysysAgent.auto = true;
 AnalysysAgent.allowTimeCheck = true;
 AnalysysAgent.maxDiffTimeInterval = 0;
+AnalysysAgent.autoTrack = true;
+
 
 
 // AnalysysAgent.registerSuperProperties({})

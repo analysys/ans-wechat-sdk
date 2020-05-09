@@ -16,7 +16,10 @@ export default {
         "appProperty": null,
         "allowTimeCheck": false,
         "maxDiffTimeInterval": 30,
-        "logflag": false
+        "logflag": false,
+        'userObj': {},
+        "userPageObj": {},
+        'autoTrack': false
     },
     "status": {
         "code": 200,
@@ -27,9 +30,9 @@ export default {
         "successCode": ""
     },
     "system": {
-        "system": null,
-        "netWork": null,
-        "scene": null
+        "system": {},
+        "netWork": {},
+        "scene": {}
     },
     "isStartUp": false,
     "FnCatch": [],

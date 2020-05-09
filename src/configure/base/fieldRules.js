@@ -49,7 +49,11 @@ import {
     share_id,
     share_path,
     share_level,
-    first_visit_time
+    first_visit_time,
+    getEleContent,
+    getEleId,
+    getEleType,
+    getEleName,
 } from '../../lib/fillFiled/getField'
 
 
@@ -289,6 +293,22 @@ export default {
         "$share_path": {
             "valueType": 0,
             "value": share_path
+        },
+        "$element_content": {
+            "valueType": 0,
+            "value": getEleContent
+        },
+        "$element_id": {
+            "valueType": 0,
+            "value": getEleId
+        },
+        "$element_type": {
+            "valueType": 0,
+            "value": getEleType
+        },
+        "$element_name": {
+            "valueType": 0,
+            "value": getEleName
         }
     },
     "xcontextCommonRule": {

@@ -17,7 +17,7 @@ Page({
     },
     onShow: function () {
       AnalysysAgent.registerSuperProperty('b', 7777)
-      AnalysysAgent.track("a1111111a", { a: 1 })
+      // AnalysysAgent.track("a1111111a", { a: 1 })
     },
     onLoad: function (option) {
         // AnalysysAgent.pageView('22222')
@@ -194,7 +194,8 @@ Page({
     },
     getDistinctId: function () {
         AnalysysAgent.getDistinctId();
-        // console.log(AnalysysAgent.getDistinctId())
+      let a = AnalysysAgent.getDistinctId();
+      console.log(a )
     },
     //其他 不合法逻辑
     pageViewR: function () {

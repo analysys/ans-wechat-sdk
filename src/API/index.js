@@ -79,7 +79,7 @@ let customFlag = true
 let startUpFnCache = []
 function initFn (callback, isS, superFlag) {
     return function () {
-        if (customFlag == true && (baseConfig.system.system == null || baseConfig.system.netWork == null)) {
+        if (customFlag == true && (Object.keys(baseConfig.system.system).length === 0 || Object.keys(baseConfig.system.netWork).length === 0)) {
             customFlag == false;
             Promise.all([systemPromise(), netWorkPromise(), checkTimePromise(), storage.initLocalData()]).then((res) => {
                 customFlag = true

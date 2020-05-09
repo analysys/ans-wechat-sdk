@@ -4,31 +4,35 @@ import baseConfig from '../../lib/baseConfig/index'
 import { checkTimePromise } from '../../lib/checkTime/checkTimePromise'
 import PublicApp from '../../lib/common/publicApp.js'
 import storage from '../../lib/storage';
+import Util from '../../lib/common/index'
+
 let systemPromise = PublicApp.System.systemPromise
 let netWorkPromise = PublicApp.Network.netWorkPromise
-function share(obj) {
+function share (toShareProperties, properties) {
     let xwho = id.getId();
-    if (!baseConfig.base.autoShare) {
-        return obj
-    }
     let pageUrl = PublicApp.Router.getPath();
+    if (Util.paramType(toShareProperties) !== "Object") {
+        toShareProperties = {
+            path: pageUrl
+        }
+    }
     Promise.all([systemPromise(), netWorkPromise(), checkTimePromise(), storage.initLocalData()]).then((res) => {
-        track('$share', {
+        let shareOwn = {
             '$share_id': xwho,
             '$share_level': Number(baseConfig.base.$share_level) + 1,
             '$share_path': pageUrl
-        })
-    })
-    var shareParam = 'share_id=' + xwho + '&share_level=' + (Number(baseConfig.base.$share_level) + 1) + '&share_path=' + encodeURIComponent(pageUrl)
-    if (obj.path) {
-        if (obj.path.indexOf('?') > -1) {
-            obj.path = obj.path + '&' + shareParam
-        } else {
-            obj.path = obj.path + '?' + shareParam
         }
+        if (Util.paramType(properties) === "Object") {
+            shareOwn = Util.objMerge(shareOwn, properties)
+        }
+        track('$share', shareOwn)
+    })
+    let shareParam = 'share_id=' + xwho + '&share_level=' + (Number(baseConfig.base.$share_level) + 1) + '&share_path=' + encodeURIComponent(pageUrl)
+    if (toShareProperties.path.indexOf('?') > -1) {
+        toShareProperties.path = toShareProperties.path + '&' + shareParam
     } else {
-        obj.path = pageUrl + '?' + shareParam
+        toShareProperties.path = toShareProperties.path + '?' + shareParam
     }
-    return obj
+    return toShareProperties
 }
 export { share }

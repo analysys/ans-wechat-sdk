@@ -29,6 +29,8 @@
       AnalysysAgent.encryptType = 1
       AnalysysAgent.allowTimeCheck = true
       AnalysysAgent.maxDiffTimeInterval = 20 
+      AnalysysAgent.autoTrack = true
+
 
     
 + appkey(必须) 在网站获取的 AppKey
@@ -38,6 +40,7 @@
 + encryptType 设置是否对上传数据加密：0 - 对上传数据不加密(默认)；1 - 对上传数据进行AES 128位ECB加密；2 对上传数据进行AES 128位CBC加密
 + allowTimeCheck 设置是否开启时间校准：false(默认) - 关闭时间校准；true - 开启时间校准
 + maxDiffTimeInterval 设置最大时间校准分为：30s(默认) ，当设置的时间差值小于他，将不开启校准。否则将会进行时间校准。假如设置成为负值，将默认为 30s。
++ autoTrack 设置是否开启全埋点,false - 不开启全埋点\(默认\)；true - 开启全埋点；开启全埋点将会上报所有绑定（支持tab、longtab、longpress）事件,并上报$user_click 事件,设置data-content为采集的 $element_content、data-type为采集的 $element_type、data-name为采集的$element_name、id为采集的$element_id。不设置采集不到。不支持系统方法包括生命周期事件的上报，如果要采集tabbar切换，务必在注册Page的时候注册OnTabItemTap方法，否则采集不到。
 
 >微信小程序要手动上报启动事件。
 

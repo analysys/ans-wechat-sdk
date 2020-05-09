@@ -121,5 +121,14 @@ export default {
             "$os",
             "$session_id"
         ]
+    },
+    "$userClick": {
+        "xcontext": [
+            "$element_content",
+            "$element_id",
+            "$element_type",
+            "$element_name",
+            "$url"
+        ]
     }
 }

@@ -3,6 +3,8 @@ import Util from './lib/common/index';
 import { errorLog, successLog } from './lib/printLog/index';
 import { resetCode } from './lib/fillFiled/index';
 import { API } from './API/index';
+import { userClick } from './API/template/userClick'
+import { userClickPage } from './API/template/userClickPage'
 
 import { UTM } from './lib/fillFiled/UTM'
 import PublicApp from './lib/common/publicApp.js'
@@ -15,6 +17,19 @@ class Ark_PASS_SDK extends API {
     }
     set appkey (key) {
         resetCode();
+        if (Util.paramType(key) !== 'String') {
+            baseConfig.status.FnName = "appkey";
+            baseConfig.status.errorCode = "60001";
+            baseConfig.status.key = key;
+            errorLog();
+            return;
+        }
+        if (key == "") {
+            baseConfig.status.FnName = "appkey";
+            baseConfig.status.errorCode = "60006";
+            errorLog();
+            return;
+        }
         baseConfig.status.FnName = "appkey";
         baseConfig.status.successCode = "20002";
         baseConfig.status.value = key;
@@ -140,8 +155,22 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.maxDiffTimeInterval = time;
     }
-    get allowTimeCheck () {
+    get maxDiffTimeInterval () {
         return baseConfig.base.maxDiffTimeInterval;
+    }
+    set autoTrack (autoTrackStatus) {
+        resetCode();
+        if (Util.paramType(autoTrackStatus) !== "Boolean") {
+            baseConfig.status.key = "autoTrack";
+            baseConfig.status.errorCode = "60003";
+            baseConfig.status.value = autoTrackStatus;
+            errorLog();
+            return;
+        }
+        baseConfig.base.autoTrack = autoTrackStatus;
+    }
+    get autoTrack () {
+        return baseConfig.base.autoTrack;
     }
 }
 
@@ -209,13 +238,36 @@ App = function (app) {
     APP(app);
 };
 // 
+let hookListNot = ["data", "onLoad", "onShow", "onReady", "onPullDownRefresh", "onReachBottom", "onShareAppMessage", "onPageScroll", "onResize", "onTabItemTap", "onHide", "onUnload"]
+
+function hookMethods (methods) {
+    appFn(methods, 'onShow', ark_sdk.startUp)
+    if (baseConfig.base.autoShare == true) {
+        appFn(methods, 'onShareAppMessage', ark_sdk.share);
+    }
+    if (baseConfig.base.autoTrack == true) {
+        for (var i in methods) {
+            if (Util.paramType(methods[i]) == "Function" && hookListNot.indexOf(i) < 0) {
+                appFn(methods, i, userClick);
+            }
+            if (Util.paramType(methods[i]) == "Function" && i == "onTabItemTap") {
+                appFn(methods, i, userClickPage);
+            }
+        }
+    }
+}
+
 let PAGE = Page;
 Page = function (page) {
-    appFn(page, 'onShow', ark_sdk.startUp)
-    if (baseConfig.base.autoShare == true) {
-        appFn(page, 'onShareAppMessage', ark_sdk.share);
-    }
+    hookMethods(page)
     PAGE(page);
 };
+
+// hook Component
+let COMPONENT = Component
+Component = function (component) {
+    hookMethods(component.methods)
+    COMPONENT(component)
+}
 
 export default ark_sdk

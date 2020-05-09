@@ -16,6 +16,19 @@ class Ark_PASS_SDK extends API {
     }
     set appkey (key) {
         resetCode();
+        if (Util.paramType(key) !== 'String') {
+            baseConfig.status.FnName = "appkey";
+            baseConfig.status.errorCode = "60001";
+            baseConfig.status.key = key;
+            errorLog();
+            return;
+        }
+        if (key == "") {
+            baseConfig.status.FnName = "appkey";
+            baseConfig.status.errorCode = "60006";
+            errorLog();
+            return;
+        }
         baseConfig.status.FnName = "appkey";
         baseConfig.status.successCode = "20002";
         baseConfig.status.value = key;
@@ -127,7 +140,7 @@ class Ark_PASS_SDK extends API {
         }
         baseConfig.base.maxDiffTimeInterval = time;
     }
-    get allowTimeCheck () {
+    get maxDiffTimeInterval () {
         return baseConfig.base.maxDiffTimeInterval;
     }
 }
