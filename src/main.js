@@ -187,7 +187,7 @@ function appFn (obj, Fn, toFn) {
             obj[Fn] = function (t) {
                 toFn(t);
                 // oldFn(t)
-                oldFn.call(this, t)
+                return oldFn.call(this, t)
             }
         }
     } else {

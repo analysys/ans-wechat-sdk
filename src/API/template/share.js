@@ -28,6 +28,7 @@ function share (toShareProperties, properties) {
         track('$share', shareOwn)
     })
     let shareParam = 'share_id=' + xwho + '&share_level=' + (Number(baseConfig.base.$share_level) + 1) + '&share_path=' + encodeURIComponent(pageUrl)
+    toShareProperties.path = toShareProperties.path || pageUrl
     if (toShareProperties.path.indexOf('?') > -1) {
         toShareProperties.path = toShareProperties.path + '&' + shareParam
     } else {
