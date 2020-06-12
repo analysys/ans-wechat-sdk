@@ -32,7 +32,7 @@ export default {
     "system": {
         "system": {},
         "netWork": {},
-        "scene": {}
+        "scene": null
     },
     "isStartUp": false,
     "FnCatch": [],

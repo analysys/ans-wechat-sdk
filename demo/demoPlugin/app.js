@@ -15,6 +15,8 @@ AnalysysAgent.encryptType = 1;  // 使用加密模块就可以放开，设置加
 AnalysysAgent.autoShare = true;
 // AnalysysAgent.autoProfile = true;
 AnalysysAgent.auto = true;
+AnalysysAgent.autoTrack = true;
+
 AnalysysAgent.allowTimeCheck = true;
 AnalysysAgent.maxDiffTimeInterval = 1;
 

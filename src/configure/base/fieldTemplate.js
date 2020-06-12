@@ -44,7 +44,6 @@ export default {
             "$session_id",
             "$is_time_calibrated",
             "$is_first_time",   //首次访问，只在startUp
-            "$referrer",
             "$scene"
         ]
     },

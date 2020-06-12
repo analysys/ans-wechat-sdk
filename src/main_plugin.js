@@ -211,35 +211,8 @@ class Ark_PASS_SDK extends API {
 
     // 小程序的初始 onLunch 更改在 类里面；
     Page (page) {
-        appFn(page, 'onShow', ark_sdk.startUp)
-        if (baseConfig.base.autoShare == true) {
-            appFn(page, 'onShareAppMessage', share);
-        }
-        if (baseConfig.base.autoTrack == true) {
-            for (var i in page) {
-                if (Util.paramType(page[i]) == "Function" && hookListNot.indexOf(i) < 0) {
-                    appFn(page, i, userClick);
-                }
-                if (Util.paramType(page[i]) == "Function" && i == "onTabItemTap") {
-                    appFn(page, i, userClickPage);
-                }
-            }
-        }
+        hookMethods(page)
         arkPage(page);
-    }
-
-    Component (component) {
-        if (baseConfig.base.autoTrack == true) {
-            for (var i in Component.methods) {
-                if (Util.paramType(component.methods[i]) == "Function" && hookListNot.indexOf(i) < 0) {
-                    appFn(component.methods, i, userClick);
-                }
-                if (Util.paramType(component.methods[i]) == "Function" && i == "onTabItemTap") {
-                    appFn(component.methods, i, userClickPage);
-                }
-            }
-        }
-        arkComponent(component)
     }
 }
 
@@ -254,9 +227,9 @@ function appFn (obj, Fn, toFn) {
             }
         } else {
             obj[Fn] = function (t) {
-                toFn(t);
-                // oldFn(t);
-                return oldFn.call(this, t)
+                var b = oldFn.apply(this, arguments);
+                toFn(t, Fn);
+                return b;
             }
         }
     } else {
@@ -266,6 +239,30 @@ function appFn (obj, Fn, toFn) {
             }
         }
     }
+}
+
+function hookMethods (methods) {
+    appFn(methods, 'onShow', ark_sdk.startUp)
+    if (baseConfig.base.autoShare == true) {
+        appFn(methods, 'onShareAppMessage', ark_sdk.share);
+    }
+    if (baseConfig.base.autoTrack == true) {
+        for (var i in methods) {
+            if (Util.paramType(methods[i]) == "Function" && hookListNot.indexOf(i) < 0) {
+                appFn(methods, i, userClick);
+            }
+            if (Util.paramType(methods[i]) == "Function" && i == "onTabItemTap") {
+                appFn(methods, i, userClickPage);
+            }
+        }
+    }
+}
+
+Component = function (component) {
+    if (component.methods) {
+        hookMethods(component.methods)
+    }
+    arkComponent(component)
 }
 
 let ark_sdk = new Ark_PASS_SDK();

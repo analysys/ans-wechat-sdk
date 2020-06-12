@@ -185,9 +185,10 @@ function appFn (obj, Fn, toFn) {
             }
         } else {
             obj[Fn] = function (t) {
-                toFn(t);
                 // oldFn(t)
-                return oldFn.call(this, t)
+                var b = oldFn.apply(this, arguments);
+                toFn(t, Fn);
+                return b;
             }
         }
     } else {
@@ -266,7 +267,9 @@ Page = function (page) {
 // hook Component
 let COMPONENT = Component
 Component = function (component) {
-    hookMethods(component.methods)
+    if (component.methods) {
+        hookMethods(component.methods)
+    }
     COMPONENT(component)
 }
 
