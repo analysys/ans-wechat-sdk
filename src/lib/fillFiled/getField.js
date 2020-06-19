@@ -224,7 +224,8 @@ function utm_campaign () {
 
 // 分享相关信息
 function share_level () {
-    return baseConfig.base.$share_level;
+    let shareLevel = parseInt(baseConfig.base.$share_level)
+    return (shareLevel === 0 || shareLevel) ? shareLevel : ''
 }
 
 function share_path () {

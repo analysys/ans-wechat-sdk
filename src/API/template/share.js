@@ -17,9 +17,10 @@ function share (toShareProperties, properties) {
         }
     }
     Promise.all([systemPromise(), netWorkPromise(), checkTimePromise(), storage.initLocalData()]).then((res) => {
+        let shareLevel = parseInt(baseConfig.base.$share_level) ? parseInt(baseConfig.base.$share_level) : ""
         let shareOwn = {
             '$share_id': xwho,
-            '$share_level': Number(baseConfig.base.$share_level) + 1,
+            '$share_level': Number(shareLevel) + 1,
             '$share_path': pageUrl
         }
         if (Util.paramType(properties) === "Object") {
