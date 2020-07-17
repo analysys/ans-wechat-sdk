@@ -127,7 +127,10 @@ export default {
             "$element_id",
             "$element_type",
             "$element_name",
-            "$url"
+            "$url",
+            "$is_first_day",
+            "$session_id",
+            "$is_time_calibrated"
         ]
     }
 }
