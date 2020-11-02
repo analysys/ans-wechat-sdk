@@ -62,7 +62,7 @@
         <button bindtap="track" hover-class="buttonHove">track</button>
         <button bindtap="identify" hover-class="buttonHove">identify</button>
         <button bindtap="reset" hover-class="buttonHove">reset</button>
-        <button bindtap="appProperty" hover-class="buttonHove">appProperty</button>
+        <!-- <button bindtap="appProperty" hover-class="buttonHove">appProperty</button> -->
         <button open-type="share" hover-class="buttonHove">share</button>
         <button bindtap="getDistinctId" hover-class="buttonHove">getDistinctId</button>
         <!-- <button id="demo-box-API" class="API WARN">不合法参数的API(其他)</button>

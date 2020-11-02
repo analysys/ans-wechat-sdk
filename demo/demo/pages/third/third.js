@@ -5,6 +5,8 @@ let AnalysysAgent = wx.AnalysysAgent
 Page({
   data: {},
   onShow: function() {
+    AnalysysAgent.pageProperty({'page3':'property3'})
+
   },
   pageView: function() {
     var pageInfo = {

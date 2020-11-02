@@ -172,6 +172,20 @@ class Ark_PASS_SDK extends API {
     get autoTrack () {
         return baseConfig.base.autoTrack;
     }
+    set autoCompleteURL (autoCompleteURLStatus) {
+        resetCode();
+        if (Util.paramType(autoCompleteURLStatus) !== "Boolean") {
+            baseConfig.status.key = "autoCompleteURL";
+            baseConfig.status.errorCode = "60003";
+            baseConfig.status.value = autoCompleteURLStatus;
+            errorLog();
+            return;
+        }
+        baseConfig.base.autoCompleteURL = autoCompleteURLStatus;
+    }
+    get autoCompleteURL () {
+        return baseConfig.base.autoCompleteURL
+    }
 }
 
 // 原有生命周周期的封装 ，不能影响小程序原有生命周期

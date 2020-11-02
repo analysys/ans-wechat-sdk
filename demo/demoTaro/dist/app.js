@@ -39,8 +39,8 @@ _AnalysysAgent_WX_SDKCustomMin2.default.encrypt = AnalysysEncryption; //加密�
 
 
 _AnalysysAgent_WX_SDKCustomMin2.default.debugMode = 2;
-_AnalysysAgent_WX_SDKCustomMin2.default.appkey = '用户设置appid';
-_AnalysysAgent_WX_SDKCustomMin2.default.uploadURL = '用户设置uploadURL';
+_AnalysysAgent_WX_SDKCustomMin2.default.appkey = 'sdktest201';
+_AnalysysAgent_WX_SDKCustomMin2.default.uploadURL = 'https://arkpaastest.analysys.cn:4089';
 _AnalysysAgent_WX_SDKCustomMin2.default.encryptType = 2;
 _AnalysysAgent_WX_SDKCustomMin2.default.autoShare = true;
 _AnalysysAgent_WX_SDKCustomMin2.default.allowTimeCheck = true;

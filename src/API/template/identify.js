@@ -15,6 +15,7 @@ function identify (distinctId, isLogin) {
     baseConfig.status.successCode = "20002"
     baseConfig.status.value = distinctId
     successLog();
+    wx.AnalysysModal && wx.AnalysysModal([{ xwhat: '$identify', xwho: distinctId }])
 }
 
 export {

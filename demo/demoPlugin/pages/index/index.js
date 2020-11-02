@@ -19,6 +19,7 @@ Page({
       // console.log(888,this);
         // AnalysysAgent.pageView('22222')
         // AnalysysAgent.registerSuperProperty('b', 7777)
+        AnalysysAgent.pageProperty({'page1':'property1'})
     },
     onLoad: function (option) {
       // console.log(7777,this);
@@ -40,7 +41,7 @@ Page({
     },
     nextPage: function () {
         wx.navigateTo({
-            url: '../logs/logs'
+            url: '../logs/logs?from=index'
         })
     },
     // API 开始   其中方法名字后缀为R的为不合法测试。

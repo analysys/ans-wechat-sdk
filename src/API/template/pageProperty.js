@@ -5,9 +5,9 @@ import baseConfig from '../../lib/baseConfig/index';
 import { errorLog, successLog } from '../../lib/printLog';
 
 
-function appProperty (obj) {
+function pageProperty (obj) {
     resetCode();
-    baseConfig.status.FnName = "$appProperty";
+    baseConfig.status.FnName = "$pageProperty";
     if (Util.paramType(obj) == "Object") {
         checkPrivate(obj)
     } else {
@@ -16,19 +16,18 @@ function appProperty (obj) {
         errorLog();
         return;
     }
-    if (bascConfig.base.appProperty) {
+    if (bascConfig.base.pageProperty) {
         for (var key in obj) {
-            bascConfig.base.appProperty[key] = obj[key]
+            bascConfig.base.pageProperty[key] = obj[key]
         }
     } else {
-        bascConfig.base.appProperty = obj
+        bascConfig.base.pageProperty = obj
     };
     bascConfig.status.successCode = "20002";
     bascConfig.status.value = JSON.stringify(obj);
     successLog();
-
 }
 
 export {
-    appProperty
+    pageProperty
 }

@@ -6,6 +6,7 @@ let Page = AnalysysAgent.Page
 Page({
   data: {},
   onShow: function() {
+    AnalysysAgent.pageProperty({'page2':'property2'})
   },
   pageView: function() {
     var pageInfo = {

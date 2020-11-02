@@ -143,6 +143,20 @@ class Ark_PASS_SDK extends API {
     get maxDiffTimeInterval () {
         return baseConfig.base.maxDiffTimeInterval;
     }
+    set autoCompleteURL (autoCompleteURLStatus) {
+        resetCode();
+        if (Util.paramType(autoCompleteURLStatus) !== "Boolean") {
+            baseConfig.status.key = "autoCompleteURL";
+            baseConfig.status.errorCode = "60003";
+            baseConfig.status.value = autoCompleteURLStatus;
+            errorLog();
+            return;
+        }
+        baseConfig.base.autoCompleteURL = autoCompleteURLStatus;
+    }
+    get autoCompleteURL () {
+        return baseConfig.base.autoCompleteURL
+    }
 }
 
 

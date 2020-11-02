@@ -44,7 +44,13 @@ function setFirstProfile (type) {
             }
         }
         if (auto === true) {
-            pageView();
+            let pageProperty = baseConfig.base.pageProperty;
+            if (Util.paramType(pageProperty) == "Object") {
+                pageView(pageProperty);
+                baseConfig.base.pageProperty = null;
+            } else {
+                pageView();
+            }
         } else {
             sendData({})
         }

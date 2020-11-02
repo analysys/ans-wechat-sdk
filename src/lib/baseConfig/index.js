@@ -19,7 +19,10 @@ export default {
         "logflag": false,
         'userObj': {},
         "userPageObj": {},
-        'autoTrack': false
+        'autoTrack': false,
+        'pageProperty': null,
+        'autoCompleteURL': true
+
     },
     "status": {
         "code": 200,

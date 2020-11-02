@@ -1,75 +1,31 @@
 
-import {
-    startUp
-} from './template/startUp';
-import {
-    pageView
-} from './template/pageView';
-import {
-    registerSuperProperty
-} from './template/registerSuperProperty';
-import {
-    unRegisterSuperProperty
-} from './template/unRegisterSuperProperty';
-import {
-    registerSuperProperties
-} from './template/registerSuperProperties';
-import {
-    getSuperProperty
-} from './template/getSuperProperty';
-import {
-    getSuperProperties
-} from './template/getSuperProperties';
-import {
-    clearSuperProperties
-} from './template/clearSuperProperties';
-import {
-    alias
-} from './template/alias';
-import {
-    track
-} from './template/track';
-import {
-    identify
-} from './template/identify';
-import {
-    reset
-} from './template/reset';
-import {
-    profileSet
-} from './template/profileSet';
-import {
-    profileSetOnce
-} from './template/profileSetOnce';
-import {
-    profileIncrement
-} from './template/profileIncrement';
-import {
-    profileAppend
-} from './template/profileAppend';
-import {
-    profileUnset
-} from './template/profileUnset';
-import {
-    profileDelete
-} from './template/profileDelete';
-import {
-    share
-} from './template/share'
-import {
-    appProperty
-} from "./template/appProperty";
-import {
-    getDistinctId
-} from './template/getDistinctId';
-import {
-    getPresetProperties
-} from './template/getPresetProperties';
+import { startUp } from './template/startUp';
+import { pageView } from './template/pageView';
+import { registerSuperProperty } from './template/registerSuperProperty';
+import { unRegisterSuperProperty } from './template/unRegisterSuperProperty';
+import { registerSuperProperties } from './template/registerSuperProperties';
+import { getSuperProperty } from './template/getSuperProperty';
+import { getSuperProperties } from './template/getSuperProperties';
+import { clearSuperProperties } from './template/clearSuperProperties';
+import { alias } from './template/alias';
+import { track } from './template/track';
+import { identify } from './template/identify';
+import { reset } from './template/reset';
+import { profileSet } from './template/profileSet';
+import { profileSetOnce } from './template/profileSetOnce';
+import { profileIncrement } from './template/profileIncrement';
+import { profileAppend } from './template/profileAppend';
+import { profileUnset } from './template/profileUnset';
+import { profileDelete } from './template/profileDelete';
+import { share } from './template/share'
+import { appProperty } from "./template/appProperty";
+import { getDistinctId } from './template/getDistinctId';
+import { getPresetProperties } from './template/getPresetProperties';
+import { pageProperty } from './template/pageProperty'
+
 import baseConfig from '../lib/baseConfig';
 
-import {
-    checkTimePromise
-} from '../lib/checkTime/checkTimePromise'
+import { checkTimePromise } from '../lib/checkTime/checkTimePromise'
 
 import PublicApp from '../lib/common/publicApp.js'
 import storage from '../lib/storage';
@@ -138,6 +94,7 @@ class API {
         this.appProperty = appProperty;
         this.getDistinctId = getDistinctId;
         this.getPresetProperties = getPresetProperties;
+        this.pageProperty = pageProperty;
     }
 }
 export {

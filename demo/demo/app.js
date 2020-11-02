@@ -18,6 +18,8 @@ AnalysysAgent.auto = true;
 AnalysysAgent.allowTimeCheck = true;
 AnalysysAgent.maxDiffTimeInterval = 0;
 AnalysysAgent.autoTrack = true;
+AnalysysAgent.autoCompleteURL = false;
+
 
 
 
@@ -33,6 +35,7 @@ App({
         AnalysysAgent.registerSuperProperty('cc', 9999)
         AnalysysAgent.identify("identy1111111", false)
         // AnalysysAgent.alias("1")
+        // AnalysysAgent.pageProperty({'page1':'property1'})
         AnalysysAgent.pageView('hhhhhhhhhhh')
         // console.log('APP---onLaunch--->', options)
         if (options.shareTicket) {

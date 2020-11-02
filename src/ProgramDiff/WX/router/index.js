@@ -20,7 +20,18 @@ function getPath () {
     // 有时pathArray 为空数组  []
     if (pathArray.length > 0) {
         let path = pathArray[pathArray.length - 1].__route__
-        return path
+        let options = pathArray[pathArray.length - 1].options;
+        // 组件完整 URL
+        if (Object.keys(options).length > 0 && baseConfig.base.autoCompleteURL == true) {
+            let urlWithArgs = path + '?'
+            for (let key in options) {
+                let value = options[key]
+                urlWithArgs += key + '=' + value + '&'
+            }
+            urlWithArgs = urlWithArgs.substring(0, urlWithArgs.length - 1)
+            return urlWithArgs
+        }
+        return path;
     }
 }
 

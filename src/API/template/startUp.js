@@ -90,7 +90,13 @@ function startUp (options) {
     let isStartUp = storage.getData("STARTUP") !== false ? true : false;
     if (!isStartUp) {
         if (baseConfig.base.auto == true) {
-            pageView();
+            let pageProperty = baseConfig.base.pageProperty;
+            if (Util.paramType(pageProperty) == "Object") {
+                pageView(pageProperty);
+                baseConfig.base.pageProperty = null;
+            } else {
+                pageView();
+            }
         }
         return
     };

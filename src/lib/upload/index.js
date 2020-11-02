@@ -61,7 +61,7 @@ function sendData (data) {
 }
 
 function sendPost (upData) {
-    storage.removeLocal("POSTDATA")
+    // storage.removeLocal("POSTDATA")
     resetCode();
     postStatus = false;
     let originUpData = upData;
@@ -79,6 +79,7 @@ function sendPost (upData) {
     baseConfig.status.value = JSON.stringify(upData);
     baseConfig.status.successCode = "20012";
     successLog();
+    wx.AnalysysModal && wx.AnalysysModal(upData)
     request({
         url: option.url,
         method: 'POST',
@@ -118,44 +119,62 @@ function sendPost (upData) {
             }
             // 200 上报成功 删除数据，500，上报失败，删除数据。
             if (res.data.code == 200 || res.data.code == 500 || res.data.code == 420) {
-                var nowLocalData = storage.getLocal("POSTDATA") || [];
-                if (nowLocalData.length > 0) {
-                    // 有产生新数据，上报新产生的数据
-                    sendPost(nowLocalData);
-                } else {
-                    // 没有产生新数据 
-                }
+                let nowLocalData = storage.getLocal('POSTDATA') || [];
+                // 删除重复的数据
+                let diffData = dataDiff(nowLocalData, originUpData);
                 if (res.data.code == 200) {
-                    baseConfig.status.successCode = "20001";
-                    successLog();
+                    baseConfig.status.successCode = '20001'
+                    successLog()
                 } else {
-                    baseConfig.status.errorCode = "60008";
-                    errorLog();
+                    baseConfig.status.errorCode = '60008'
+                    errorLog()
+                }
+                storage.removeLocal("POSTDATA");
+                if (diffData.length > 0) {
+                    storage.setLocal("POSTDATA", diffData)
+                    sendPost(diffData)
                 }
             } else {
-                baseConfig.status.errorCode = "60008";
-                errorLog();
+                baseConfig.status.errorCode = '60008'
+                errorLog()
                 // 是否单加一个 你需要升级 方舟服务端。
-                let newLocal = storage.getLocal("POSTDATA") || [];
-                let newSaveData = [...originUpData, ...newLocal];
-                storage.setLocal("POSTDATA", newSaveData);
-                if (newLocal.length > 0) {
-                    sendPost(newSaveData);
-                }
+                // let newLocal = storage.getLocal('POSTDATA') || []
+                // let newSaveData = [...originUpData, ...newLocal]
+                // storage.setLocal('POSTDATA', newSaveData)
+                // if (newLocal.length > 0) {
+                //     sendPost(newSaveData)
+                // }
             }
         },
         fail: function () {
             postStatus = true;
             baseConfig.status.errorCode = "60008";
             errorLog();
-            let newLocal = storage.getLocal("POSTDATA") || [];
-            let newSaveData = [...originUpData, ...newLocal];
-            storage.setLocal("POSTDATA", newSaveData);
-            if (newLocal.length > 0) {
-                sendPost(newSaveData);
-            }
+            // let newLocal = storage.getLocal("POSTDATA") || [];
+            // let newSaveData = [...originUpData, ...newLocal];
+            // storage.setLocal("POSTDATA", newSaveData);
+            // if (newLocal.length > 0) {
+            //     sendPost(newSaveData);
+            // }
         }
     })
+}
+
+function dataDiff (arr1, arr2) {
+    let length1 = arr1.length;
+    let length2 = arr2.length;
+    if (length1 > 0) {
+        for (let i = 0; i < length1; i++) {
+            for (let j = 0; j < length2; j++) {
+                if (arr1[i].xwhat == arr2[j].xwhat && arr1[i].xwhen == arr2[j].xwhen) {
+                    arr1.splice(i, 1);
+                    dataDiff(arr1, arr2)
+                    return arr1
+                }
+            }
+        }
+    }
+    return arr1;
 }
 
 export {
