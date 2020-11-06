@@ -23,7 +23,7 @@ function pageView (pageName, obj) {
         }
         if (arguments.length > 1) {
             checkPrivate(obj);
-            if (Util.paramType(pageName) === "Object") {
+            if (Util.paramType(obj) === "Object") {
                 userobj = obj;
             }
         }
