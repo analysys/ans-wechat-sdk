@@ -7,6 +7,7 @@ import { terser } from "rollup-plugin-terser";
 import replace from 'rollup-plugin-replace';
 import path from 'path';
 
+
 const pathResolve = p => path.join(__dirname, p)
 
 function changePath () {
