@@ -48,7 +48,7 @@ var successMessage = {
     '20004': '{FN}:clear success',
     '20005': '{FN}:reset success',
     '20006': 'set appkey success. current appkey : {VALUE}',
-    '20007': 'Init Analysys WeChat sdk success, version : {VALUE}',
+    '20007': 'Init Analysys ' + baseConfig.base.$lib + ' sdk success, version : {VALUE}',
     '20008': 'set uploadURL success. current uploadURL : {VALUE}',
     '20009': '{FN}:[{KEY}] : get failed',
     '20010': '{FN}:[{KEY}] : get success. ({VALUE})',
@@ -61,7 +61,7 @@ var successMessage = {
         "数据将会进行时间校准"
 }
 
-function successLog(msg) {
+function successLog (msg) {
     if (baseConfig.base.$debug === 1 || baseConfig.base.$debug === 2) {
         var status = baseConfig.status
         var successCode = status.successCode
@@ -86,7 +86,7 @@ function successLog(msg) {
     }
 }
 
-function errorLog() {
+function errorLog () {
     var status = baseConfig.status;
     var errorCode = status.errorCode;
     var fn = status.FnName;

@@ -8,7 +8,7 @@ class storage {
         this.localStatus = false
         this.getStoragePromise = PublicApp.Storage.getStoragePromise
     }
-    initLocalData() {
+    initLocalData () {
 
         return getStoragePromise('FZ_STROAGE').then((value) => {
             if (this.localStatus) {
@@ -34,33 +34,33 @@ class storage {
             this.local = {}
         }).catch((e) => { })
     }
-    setData(name, value) {
+    setData (name, value) {
         this.Session[name] = value
     }
-    getData(name) {
+    getData (name) {
 
-        return this.Session[name] === "undefind" ? "" : this.Session[name]
+        return this.Session[name] === undefined ? "" : this.Session[name]
     }
-    removeData(name) {
-        if (this.Session[name] !== "undefind") {
+    removeData (name) {
+        if (this.Session[name] !== undefined) {
             delete this.Session[name]
         }
     }
-    clearData() {
+    clearData () {
         this.Session = {}
     }
-    setLocal(name, val) {
+    setLocal (name, val) {
         this.local[name] = val
         let value = this.local
         setStoragePromise("FZ_STROAGE", value).then(() => {
 
         }, (e) => { }).catch((e) => { })
     }
-    getLocal(name) {
+    getLocal (name) {
         return this.local[name]
     }
-    removeLocal(name) {
-        if (this.local[name] !== "undefind") {
+    removeLocal (name) {
+        if (this.local[name] !== undefined) {
             delete this.local[name]
             let value = this.local
             setStoragePromise("FZ_STROAGE", value).then(() => {

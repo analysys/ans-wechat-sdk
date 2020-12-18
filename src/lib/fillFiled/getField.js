@@ -11,19 +11,10 @@ let getPackageName = PublicApp.Router.getPackageName
 let getTitle = PublicApp.Router.getTitle
 let getReferer = PublicApp.Router.getReferer
 
-
 var base = baseConfig.base
-
-function appkey (appkey) {
-    base.appid = appkey
-}
 
 function getAppId () {
     return base.appid
-}
-
-function debugMode (debug) {
-    base.$debug = debug
 }
 
 function getDebugMode () {
@@ -35,14 +26,14 @@ function getId () {
 }
 
 function uploadURL (url) {
-    if (url.charAt(url.length - 1) !== "/") {
+    if (url.charAt(url.length - 1) !== '/') {
         url += '/'
     }
     base.uploadURL = url
 }
 
 function getUploadURL (url) {
-    if (base.uploadURL.charAt(base.uploadURL.length - 1) !== "/") {
+    if (base.uploadURL.charAt(base.uploadURL.length - 1) !== '/') {
         base.uploadURL += '/'
     }
     return base.uploadURL
@@ -50,14 +41,14 @@ function getUploadURL (url) {
 
 function nowDate () {
     if (baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
-        return +new Date() + (storage.getLocal("ANSSERVERTIME") ? Number(storage.getLocal("ANSSERVERTIME")) : 0)
+        return +new Date() + (storage.getLocal('ANSSERVERTIME') ? Number(storage.getLocal('ANSSERVERTIME')) : 0)
     } else {
         return +new Date();
     }
 }
 
 function timeCalibration () {
-    if (storage.getLocal("ANSSERVERTIME") && baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
+    if (storage.getLocal('ANSSERVERTIME') && baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
         return true
     }
     return false
@@ -72,43 +63,43 @@ function isLogin () {
 }
 
 function getScreenWidth () {
-    return baseConfig.system.system.screenWidth || "";
+    return baseConfig.system.system.screenWidth || '';
 }
 
 function getScreenHeight () {
-    return baseConfig.system.system.screenHeight || "";
+    return baseConfig.system.system.screenHeight || '';
 }
 
 function getOs () {
-    return baseConfig.system.system.system ? baseConfig.system.system.system.split(' ')[0] : "";
+    return baseConfig.system.system.system ? baseConfig.system.system.system.split(' ')[0] : '';
 }
 
 function getBrand () {
-    return baseConfig.system.system.brand || "";
+    return baseConfig.system.system.brand || '';
 }
 
 function getBrower () {
-    return baseConfig.system.system.browser || "";
+    return baseConfig.system.system.browser || '';
 }
 
 function getBrowerVersion () {
-    return baseConfig.system.system.version || "";
+    return baseConfig.system.system.version || '';
 }
 
 function getOsVersion () {
-    return baseConfig.system.system.system ? baseConfig.system.system.system.split(' ')[1] : "";
+    return baseConfig.system.system.system ? baseConfig.system.system.system.split(' ')[1] : '';
 }
 
 function getModel () {
-    return baseConfig.system.system.model || "";
+    return baseConfig.system.system.model || '';
 }
 
 function getLanguage () {
-    return baseConfig.system.system.language || "";
+    return baseConfig.system.system.language || '';
 }
 
 function getNetWork () {
-    return baseConfig.system.netWork.networkType;;
+    return baseConfig.system.netWork.networkType || '';
 }
 
 function getRefferer () {
@@ -119,7 +110,7 @@ function getRefferer () {
 //     if (baseConfig.system.scene) {
 //         return baseConfig.system.scene.toString();
 //     } else {
-//         return "";
+//         return '';
 //     }
 // }
 
@@ -130,8 +121,8 @@ function getSessionId () {
 }
 
 function is_first_time () {
-    var timeStatus = storage.getLocal("FRISTIME")
-    storage.setLocal("FRISTIME", false)
+    var timeStatus = storage.getLocal('FRISTIME')
+    storage.setLocal('FRISTIME', false)
     if (timeStatus == undefined) {
         return true;
     }
@@ -141,7 +132,7 @@ function is_first_day () {
     var date = new Date();
     // 假如 进行了时间校准 此时的date 应该是校准过的时间
     if (baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
-        date = new Date(+new Date() + (storage.getLocal("ANSSERVERTIME") ? Number(storage.getLocal("ANSSERVERTIME")) : 0))
+        date = new Date(+new Date() + (storage.getLocal('ANSSERVERTIME') ? Number(storage.getLocal('ANSSERVERTIME')) : 0))
     }
     var year = date.getFullYear()
     var month = date.getMonth() + 1
@@ -149,17 +140,17 @@ function is_first_day () {
     var day = date.getDate()
     day = day < 10 ? '0' + day : day
     var todayDate = year + '' + month + '' + day
-    var storageDay = storage.getLocal("FRISTDAY")
+    var storageDay = storage.getLocal('FRISTDAY')
     if (storageDay && todayDate !== storageDay) {
         return false
     }
-    storage.setLocal("FRISTDAY", todayDate)
+    storage.setLocal('FRISTDAY', todayDate)
     return true
 }
 function first_visit_time () {
     let time = Util.format(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS');
     if (baseConfig.base.allowTimeCheck && baseConfig.base.logflag) {
-        time = Util.format(new Date(+new Date() + (storage.getLocal("ANSSERVERTIME") ? Number(storage.getLocal("ANSSERVERTIME")) : 0)), 'yyyy-MM-dd hh:mm:ss.SSS');
+        time = Util.format(new Date(+new Date() + (storage.getLocal('ANSSERVERTIME') ? Number(storage.getLocal('ANSSERVERTIME')) : 0)), 'yyyy-MM-dd hh:mm:ss.SSS');
     }
     if (storage.getLocal('ARKFRISTPROFILE')) {
         time = storage.getLocal('ARKFRISTPROFILE');
@@ -178,7 +169,7 @@ function getUrl () {
     //     const url = `/${currentPage.route}`
     //     return url
     // }
-    return getPath() || ""
+    return getPath() || ''
 }
 
 function getLibVersion () {
@@ -187,8 +178,8 @@ function getLibVersion () {
 
 
 // UTM 相关 UTM有更改 sessionId 要变更
-let old_UTM = storage.getData("UTMSESSION") || "";
-if (UTM["utm_campaign"] && UTM["utm_source"] && UTM["utm_medium"]) {
+let old_UTM = storage.getData('UTMSESSION') || '';
+if (UTM['utm_campaign'] && UTM['utm_source'] && UTM['utm_medium']) {
     if (old_UTM !== JSON.stringify(UTM)) {
         sessionId.setId()
     }
@@ -199,27 +190,27 @@ if (UTM["utm_campaign"] && UTM["utm_source"] && UTM["utm_medium"]) {
 }
 
 function utm_campaign_id () {
-    return UTM["utm_campaign_id"]
+    return UTM['utm_campaign_id'] || ''
 }
 
 function utm_source () {
-    return UTM["utm_source"]
+    return UTM['utm_source'] || ''
 }
 
 function utm_medium () {
-    return UTM["utm_medium"]
+    return UTM['utm_medium'] || ''
 }
 
 function utm_term () {
-    return UTM["utm_term"]
+    return UTM['utm_term'] || ''
 }
 
 function utm_content () {
-    return UTM["utm_content"]
+    return UTM['utm_content'] || ''
 }
 
 function utm_campaign () {
-    return UTM["utm_campaign"]
+    return UTM['utm_campaign'] || ''
 }
 
 // 分享相关信息
@@ -229,35 +220,44 @@ function share_level () {
 }
 
 function share_path () {
-    return baseConfig.base.$share_path;
+    return baseConfig.base.$share_path
 }
 
 function share_id () {
     return baseConfig.base.$share_id
+}
+function valueToString (value) {
+    if (Util.paramType(value) === 'Object') {
+        return JSON.stringify(value)
+    } else if (Util.paramType(value) === 'Undefined' || Util.paramType(value) === 'Null') {
+        return ''
+    } else {
+        return value.toString()
+    }
+
 }
 // 全埋点相关
 function getEleContent () {
     let userObj = baseConfig.base.userObj;
     let userPageObj = baseConfig.base.userPageObj;  // tab点击获取到的参数不一样，单独存放
     if (userObj.currentTarget) {
-        return userObj.currentTarget && userObj.currentTarget.dataset && userObj.currentTarget.dataset.content || ""
+        return userObj.currentTarget.dataset && valueToString(userObj.currentTarget.dataset.content)
     } else {
-        return userPageObj.text || ""
+        return valueToString(userPageObj.text)
     }
 }
 function getEleId () {
     let userObj = baseConfig.base.userObj;
-    return userObj.currentTarget && userObj.currentTarget.id || ""
+    return userObj.currentTarget && valueToString(userObj.currentTarget.id)
 }
 function getEleType () {
     let userObj = baseConfig.base.userObj;
-    return userObj.currentTarget && userObj.currentTarget.dataset && userObj.currentTarget.dataset.type || ""
+    return userObj.currentTarget && userObj.currentTarget.dataset && valueToString(userObj.currentTarget.dataset.type)
 }
 function getEleName () {
     let userObj = baseConfig.base.userObj;
-    return userObj.currentTarget && userObj.currentTarget.dataset && userObj.currentTarget.dataset.name || ""
+    return userObj.currentTarget && userObj.currentTarget.dataset && valueToString(userObj.currentTarget.dataset.name)
 }
-
 
 
 export {
@@ -306,5 +306,5 @@ export {
     getEleContent,
     getEleId,
     getEleType,
-    getEleName
+    getEleName,
 }

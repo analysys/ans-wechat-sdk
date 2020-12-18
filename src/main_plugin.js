@@ -7,6 +7,7 @@ import { share } from './API/template/share'
 import { userClick } from './API/template/userClick'
 import { userClickPage } from './API/template/userClickPage'
 
+
 import { UTM } from './lib/fillFiled/UTM'
 import PublicApp from './lib/common/publicApp.js'
 let setPublicApp = PublicApp.setPublicApp
@@ -15,6 +16,8 @@ let arkApp = App;
 let arkPage = Page;
 let arkComponent = Component
 let hookListNot = ["data", "onLoad", "onShow", "onReady", "onPullDownRefresh", "onReachBottom", "onShareAppMessage", "onPageScroll", "onResize", "onTabItemTap", "onHide", "onUnload"]
+
+
 
 class Ark_PASS_SDK extends API {
     constructor() {
@@ -200,14 +203,14 @@ class Ark_PASS_SDK extends API {
             }
             // 存在参数的 utm 赋值
             if (option.query && Object.keys(option.query).length > 0) {
-                if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
-                    UTM.utm_campaign_id = option.query.campaign_id;
-                    UTM.utm_campaign = option.query.utm_campaign;
-                    UTM.utm_content = option.query.utm_content;
-                    UTM.utm_medium = option.query.utm_medium;
-                    UTM.utm_source = option.query.utm_source;
-                    UTM.utm_term = option.query.utm_term;
-                }
+                // if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
+                UTM.utm_campaign_id = option.query.campaign_id;
+                UTM.utm_campaign = option.query.utm_campaign;
+                UTM.utm_content = option.query.utm_content;
+                UTM.utm_medium = option.query.utm_medium;
+                UTM.utm_source = option.query.utm_source;
+                UTM.utm_term = option.query.utm_term;
+                // }
                 // 关于分享的赋值引用
                 if (option.query.share_id && option.query.share_level && option.query.share_path) {
                     baseConfig.base.$share_id = option.query.share_id;
@@ -222,7 +225,6 @@ class Ark_PASS_SDK extends API {
         })
         arkApp(app)
     }
-
     // 小程序的初始 onLunch 更改在 类里面；
     Page (page) {
         hookMethods(page)
@@ -264,8 +266,7 @@ function hookMethods (methods) {
         for (var i in methods) {
             if (Util.paramType(methods[i]) == "Function" && hookListNot.indexOf(i) < 0) {
                 appFn(methods, i, userClick);
-            }
-            if (Util.paramType(methods[i]) == "Function" && i == "onTabItemTap") {
+            } else if (Util.paramType(methods[i]) == "Function" && i == "onTabItemTap") {
                 appFn(methods, i, userClickPage);
             }
         }

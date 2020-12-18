@@ -5,11 +5,10 @@ import { resetCode } from './lib/fillFiled/index';
 import { API } from './API/index';
 import { userClick } from './API/template/userClick'
 import { userClickPage } from './API/template/userClickPage'
-
 import { UTM } from './lib/fillFiled/UTM'
+
 import PublicApp from './lib/common/publicApp.js'
 let setPublicApp = PublicApp.setPublicApp
-
 
 class Ark_PASS_SDK extends API {
     constructor() {
@@ -199,6 +198,7 @@ function appFn (obj, Fn, toFn) {
             }
         } else {
             obj[Fn] = function (t) {
+                // toFn(t);
                 // oldFn(t)
                 var b = oldFn.apply(this, arguments);
                 toFn(t, Fn);
@@ -230,14 +230,14 @@ App = function (app) {
         }
         // 存在参数的 utm 赋值
         if (option.query && Object.keys(option.query).length > 0) {
-            if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
-                UTM.utm_campaign_id = option.query.campaign_id;
-                UTM.utm_campaign = option.query.utm_campaign;
-                UTM.utm_content = option.query.utm_content;
-                UTM.utm_medium = option.query.utm_medium;
-                UTM.utm_source = option.query.utm_source;
-                UTM.utm_term = option.query.utm_term;
-            }
+            // if (option.query.utm_campaign && option.query.utm_medium && option.query.utm_source) {
+            UTM.utm_campaign_id = option.query.campaign_id;
+            UTM.utm_campaign = option.query.utm_campaign;
+            UTM.utm_content = option.query.utm_content;
+            UTM.utm_medium = option.query.utm_medium;
+            UTM.utm_source = option.query.utm_source;
+            UTM.utm_term = option.query.utm_term;
+            // }
             // 关于分享的赋值引用
             if (option.query.share_id && option.query.share_level && option.query.share_path) {
                 baseConfig.base.$share_id = option.query.share_id;
@@ -264,8 +264,7 @@ function hookMethods (methods) {
         for (var i in methods) {
             if (Util.paramType(methods[i]) == "Function" && hookListNot.indexOf(i) < 0) {
                 appFn(methods, i, userClick);
-            }
-            if (Util.paramType(methods[i]) == "Function" && i == "onTabItemTap") {
+            } else if (Util.paramType(methods[i]) == "Function" && i == "onTabItemTap") {
                 appFn(methods, i, userClickPage);
             }
         }
@@ -286,5 +285,7 @@ Component = function (component) {
     }
     COMPONENT(component)
 }
+
+
 
 export default ark_sdk

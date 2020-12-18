@@ -22,7 +22,6 @@ export default {
         'autoTrack': false,
         'pageProperty': null,
         'autoCompleteURL': true
-
     },
     "status": {
         "code": 200,

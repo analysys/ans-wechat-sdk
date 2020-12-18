@@ -18,7 +18,7 @@ import {
     setFirstProfile
 } from './setFirstProfile'
 
-function alias(aliasId) {
+function alias (aliasId) {
     baseConfig.status.FnName = '$alias'
     resetCode()
     var status = true;

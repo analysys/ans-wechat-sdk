@@ -1,4 +1,3 @@
-
 import { startUp } from './template/startUp';
 import { pageView } from './template/pageView';
 import { registerSuperProperty } from './template/registerSuperProperty';
@@ -22,9 +21,7 @@ import { appProperty } from "./template/appProperty";
 import { getDistinctId } from './template/getDistinctId';
 import { getPresetProperties } from './template/getPresetProperties';
 import { pageProperty } from './template/pageProperty'
-
 import baseConfig from '../lib/baseConfig';
-
 import { checkTimePromise } from '../lib/checkTime/checkTimePromise'
 
 import PublicApp from '../lib/common/publicApp.js'
@@ -53,7 +50,7 @@ function initFn (callback, isS, superFlag) {
                 } else {
                     baseConfig.FnCatch.push([callback, arguments])
                 }
-            })
+            }).catch((e) => { })
         } else {
             if ((isS || baseConfig.isStartUp == true) && customFlag == true) {
                 callback.apply(callback, arguments)
@@ -97,6 +94,4 @@ class API {
         this.pageProperty = pageProperty;
     }
 }
-export {
-    API
-}
+export { API }
