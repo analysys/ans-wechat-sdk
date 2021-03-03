@@ -1,6 +1,6 @@
 import Util from '../common/index.js'
 import baseConfig from '../baseConfig/index.js'
-import { errorLog } from '../printLog/index.js'
+import { errorLog, successLog } from '../printLog/index.js'
 import checkRule from '../checkField/index.js'
 import fieldRules from '../../configure/base/fieldRules'
 import storage from '../../lib/storage/index'
@@ -224,6 +224,11 @@ function checkBase () {
 
 function checkPrivate (obj, ruleName, isKey, keyName) {
     resetCode()
+    if (keyName == "aliasId" && obj === storage.getLocal('ARK_LOGINID')) {
+        baseConfig.status.successCode = '20014'
+        successLog()
+        return false
+    }
     var rule = fieldRules[ruleName] || fieldRules.xcontextCommonRule
     if (Util.paramType(obj) !== 'Object' || isKey == true) {
         var checkKey = rule.check.key

@@ -58,7 +58,8 @@ var successMessage = {
     '20013': "收到服务器的时间: {VALUE} \n" +
         "本地时间: {KEY} \n" +
         "时间相差:  {FN} \n" +
-        "数据将会进行时间校准"
+        "数据将会进行时间校准",
+    '20014': 'aliasID already bound'
 }
 
 function successLog (msg) {

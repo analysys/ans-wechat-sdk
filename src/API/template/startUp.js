@@ -2,7 +2,6 @@ import baseConfig from '../../lib/baseConfig/index'
 import Util from '../../lib/common/index'
 import storage from '../../lib/storage/index'
 import sessionId from '../../lib/fillFiled/sessionId'
-import id from '../../lib/fillFiled/id'
 import { temp } from '../../lib/mergeRules/index'
 import { fillField } from '../../lib/fillFiled/index'
 import { resetCode } from '../../lib/fillFiled/index'
@@ -46,25 +45,7 @@ function startUp (options) {
     if (options) {
         setOptions(options)
     }
-    let appid = storage.getLocal('ARKAPPID');
-    let debug = storage.getLocal('ARKDEBUG');
-    let uploadURL = storage.getLocal('ARKUPLOADURL');
-    if (appid && Util.paramType(debug) == 'Number' && uploadURL && (appid !== baseConfig.base.appid || (debug === 1 && debug !== baseConfig.base.$debug) || uploadURL !== baseConfig.base.uploadURL)) {
-        // 数据变化
-        Util.delFristDay() //清除首天时间
-        Util.delFristTime()//清除首次时间
-        storage.removeLocal("ARKFRISTPROFILE"); //清除首次启动时间
-        storage.removeLocal("ARKFRISTPROFILESEND"); //清除发送首次用户属性
 
-        id.removeLoginId(); //清除登录ID
-        id.removeTrackId();//清除手动设置设备ID
-        storage.removeLocal("ARK_TRACK_LOGIN") //清除identity登录状态
-
-        storage.removeLocal('ARKSUPER')//清除超级属性
-        storage.removeData("STARTUP")//清除启动记录
-        storage.removeData("STARTUPTIME");//清除启动时间
-        storage.removeLocal("POSTDATA"); //变更 删除缓存数据 
-    }
     Util.setFristDay()
     Util.setFristTime();
     if (!baseConfig.base.allowTimeCheck) {

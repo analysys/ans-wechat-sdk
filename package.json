@@ -1,11 +1,12 @@
 {
     "name": "ans-wechat-sdk",
-    "version": "4.3.10",
+    "version": "4.3.11",
     "description": "This is the offical wechat SDK for Analysys.",
     "main": "sdk/AnalysysAgent_WX_SDK.custom.min.js",
+    "module": "sdk/AnalysysAgent_WX_SDK.es6.min.js",
     "scripts": {
-        "build": "rollup -c",
-        "dev": "rollup -c --watch",
+        "build": "rollup --config rollup.config.wx.js",
+        "dev": "rollup --config rollup.config.wx.js --watch",
         "wx.watch": "rollup --config rollup.config.wx.js --watch",
         "encryption": "rollup --config ./build/encryption/rollup.config.encryption.js --watch"
     },

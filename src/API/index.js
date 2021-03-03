@@ -26,6 +26,9 @@ import { checkTimePromise } from '../lib/checkTime/checkTimePromise'
 
 import PublicApp from '../lib/common/publicApp.js'
 import storage from '../lib/storage';
+import Util from '../lib/common/index'
+import id from '../lib/fillFiled/id'
+
 let systemPromise = PublicApp.System.systemPromise
 let netWorkPromise = PublicApp.Network.netWorkPromise
 let customFlag = true
@@ -35,6 +38,29 @@ function initFn (callback, isS, superFlag) {
         if (customFlag == true && (Object.keys(baseConfig.system.system).length === 0 || Object.keys(baseConfig.system.netWork).length === 0)) {
             customFlag == false;
             Promise.all([systemPromise(), netWorkPromise(), checkTimePromise(), storage.initLocalData()]).then((res) => {
+
+                let appid = storage.getLocal('ARKAPPID');
+                let debug = storage.getLocal('ARKDEBUG');
+                let uploadURL = storage.getLocal('ARKUPLOADURL');
+                if (appid && Util.paramType(debug) == 'Number' && uploadURL && (appid !== baseConfig.base.appid || (debug === 1 && debug !== baseConfig.base.$debug) || uploadURL !== baseConfig.base.uploadURL)) {
+                    // 数据变化
+                    Util.delFristDay() //清除首天时间
+                    Util.delFristTime()//清除首次时间
+                    storage.removeLocal("ARKFRISTPROFILE"); //清除首次启动时间
+                    storage.removeLocal("ARKFRISTPROFILESEND"); //清除发送首次用户属性
+
+                    id.removeLoginId(); //清除登录ID
+                    id.removeTrackId();//清除手动设置设备ID
+                    storage.removeLocal("ARK_TRACK_LOGIN") //清除identity登录状态
+
+                    storage.removeLocal('ARKSUPER')//清除超级属性
+                    storage.removeData("STARTUP")//清除启动记录
+                    storage.removeData("STARTUPTIME");//清除启动时间
+                    storage.removeLocal("POSTDATA"); //变更 删除缓存数据 
+                }
+                storage.setLocal('ARKAPPID', baseConfig.base.appid);
+                storage.setLocal('ARKDEBUG', baseConfig.base.$debug)
+                storage.setLocal('ARKUPLOADURL', baseConfig.base.uploadURL)
                 customFlag = true
                 // 第一个 系统信息，第二个 网络信息  第三个 场景值。  赋值给公共变量 baseConfig ，之后 getField 获取公共变量。
                 baseConfig.system.system = res[0];

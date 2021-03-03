@@ -10,7 +10,7 @@ AnalysysAgent.encrypt = AnalysysEncryption;
 
 AnalysysAgent.debugMode = 2
 AnalysysAgent.appkey = 'sdktest201'
-AnalysysAgent.uploadURL = 'https://arkpaastest.analysys.cn:4089'
+AnalysysAgent.uploadURL = 'https://arkpaastest.analxysys.cn:4089'
 AnalysysAgent.encryptType = 1;   //使用加密文件的时候 放开赋值。（直接放开不会报错）
 AnalysysAgent.autoShare = true;
 // AnalysysAgent.autoProfile = false;
@@ -20,7 +20,7 @@ AnalysysAgent.maxDiffTimeInterval = 0;
 AnalysysAgent.autoTrack = true;
 AnalysysAgent.autoCompleteURL = false;
 
-
+AnalysysAgent.alias('abc')
 
 
 // AnalysysAgent.registerSuperProperties({})
