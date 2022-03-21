@@ -8,6 +8,7 @@ export default {
     "base": {
         "outer": [
             "appid",
+            "appname",
             "xwho",
             "xwhat",
             "xwhen",
@@ -127,7 +128,9 @@ export default {
             "$element_id",
             "$element_type",
             "$element_name",
+            "$element_function",
             "$url",
+            "$url_path",
             "$is_first_day",
             "$session_id",
             "$is_time_calibrated"

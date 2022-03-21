@@ -9,8 +9,10 @@ AnalysysAgent.encrypt = AnalysysEncryption;
 // AnalysysAgent.encrypt = AnalysysEncryption;   //加密模块的方法赋值给AnalysysAgent，方便调用。
 
 AnalysysAgent.debugMode = 2
-AnalysysAgent.appkey = 'sdktest201'
-AnalysysAgent.uploadURL = 'https://arkpaastest.analxysys.cn:4089'
+// AnalysysAgent.appkey = 'sdktest201'
+// AnalysysAgent.uploadURL = 'https://arkpaastest.analxysys.cn:4089'
+AnalysysAgent.appkey = 'a7ca59e03c56d206'
+AnalysysAgent.uploadURL = 'https://uba-up.analysysdata.com'
 AnalysysAgent.encryptType = 1;   //使用加密文件的时候 放开赋值。（直接放开不会报错）
 AnalysysAgent.autoShare = true;
 // AnalysysAgent.autoProfile = false;
@@ -19,6 +21,7 @@ AnalysysAgent.allowTimeCheck = true;
 AnalysysAgent.maxDiffTimeInterval = 0;
 AnalysysAgent.autoTrack = true;
 AnalysysAgent.autoCompleteURL = false;
+AnalysysAgent.appname = 'test_appname'
 
 AnalysysAgent.alias('abc')
 

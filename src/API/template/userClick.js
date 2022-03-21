@@ -9,7 +9,8 @@ import { sendData } from '../../lib/upload/index'
 function userClick () {
     let args = arguments;
     if (args.length > 0 && args[0] && Util.paramType(args[0]) === "Object" && (args[0].type == "tap" || args[0].type == "longtap" || args[0].type == "longpress")) {
-        baseConfig.base.userObj = arguments[0];
+        // console.log('userClick', arguments)
+        baseConfig.base.userObj = Object.assign(arguments[0], {element_function: arguments[1]});
         // 判断是不是 三者点击之一  ，tab  longtab ，longPress
         baseConfig.status.FnName = "$user_click";
         resetCode()

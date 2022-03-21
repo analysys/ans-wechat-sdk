@@ -14,6 +14,7 @@
 
 import {
     getAppId,
+    getAppName,
     getUploadURL,
     getId,
     nowDate,
@@ -37,6 +38,7 @@ import {
     getNetWork,
     getoriginal_id,
     getUrl,
+    getUrlPath,
     timeCalibration,
     getScene,
     getRefferer,
@@ -53,6 +55,7 @@ import {
     getEleContent,
     getEleId,
     getEleType,
+    getEleFunction,
     getEleName,
 } from '../../lib/fillFiled/getField'
 
@@ -60,6 +63,7 @@ import {
 export default {
     "resetKeywords": [
         "appid",
+        "appname",
         "$debug",
         "uploadUrl"
     ],
@@ -81,6 +85,18 @@ export default {
             "successCode": '20006'
         }
     },
+    "appname": {
+        "valueType": 0,
+        "value": getAppName,
+        "check": {
+            "value": ["isString", "nimLength"],
+            "errorCode": '60008',
+            "successCode": '20009'
+        }
+    },
+
+    
+    
     "auto": {
         "check": {
             "value": ["isBoolean"],
@@ -257,6 +273,10 @@ export default {
             "valueType": 0,
             "value": getUrl
         },
+        "$url_path": {
+            "valueType": 0,
+            "value": getUrlPath
+        },
         // utm 相关
         "$utm_campaign_id": {
             "valueType": 0,
@@ -305,6 +325,10 @@ export default {
         "$element_type": {
             "valueType": 0,
             "value": getEleType
+        },
+        "$element_function": {
+            "valueType": 0,
+            "value": getEleFunction
         },
         "$element_name": {
             "valueType": 0,
