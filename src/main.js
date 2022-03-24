@@ -42,12 +42,20 @@ class Ark_PASS_SDK extends API {
     return baseConfig.base.appid
   }
 
-  set appname(name) {
-    baseConfig.base.appname = name
+  set $appname(name) {
+    baseConfig.base.$appname = name
   }
-  
-  get appname() {
-    return baseConfig.base.appname
+
+  get $appname() {
+    return baseConfig.base.$appname
+  }
+
+  set $appid(appid) {
+    baseConfig.base.$appid = appid
+  }
+
+  get $appid() {
+    return baseConfig.base.$appid
   }
 
   set debugMode(debug) {

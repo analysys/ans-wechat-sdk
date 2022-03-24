@@ -19,7 +19,11 @@ function getAppId() {
 }
 
 function getAppName() {
-  return base.appname
+  return base.$appname
+}
+
+function getWxAppId() {
+  return base.$appid
 }
 
 function getDebugMode() {
@@ -318,6 +322,7 @@ function getEleName() {
 export {
   getAppId,
   getAppName,
+  getWxAppId,
   getId,
   getUploadURL,
   getScreenWidth,
