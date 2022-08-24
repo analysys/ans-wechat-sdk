@@ -23,4 +23,7 @@
         <button bindtap="profileUnset" hover-class="buttonHove">profileUnset</button>
         <button bindtap="profileDelete" hover-class="buttonHove">profileDelete</button>
     </view>
+    <view bindtap="bubblingUp">
+        <button bindtap="bubbling" hover-class="buttonHove">冒泡测试</button>
+    </view>
 </view>

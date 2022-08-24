@@ -7,6 +7,12 @@ Page({
   onShow: function() {
     AnalysysAgent.pageProperty({'page2':'property2'})
   },
+  onHide: function () {
+    console.log('onHide-next-11')
+  },
+  onUnload: function () {
+    console.log('onUnload-next-11')
+  },
   pageView: function() {
     var pageInfo = {
       "commodityName": "iPhone",
@@ -92,8 +98,8 @@ Page({
   profileDelete: function() {
     AnalysysAgent.profileDelete()
   },
-  onLoad: function() {
-
+  onLoad: function(o) {
+    
   },
   prePage: function() {
     wx.navigateTo({
@@ -104,5 +110,14 @@ Page({
     wx.navigateTo({
       url: '../third/third'
     })
+  },
+
+  // 冒泡测试
+  bubbling () {
+    console.log('冒泡')
+  },
+
+  bubblingUp () {
+    console.log('冒泡up')
   }
 })

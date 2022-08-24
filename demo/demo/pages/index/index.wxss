@@ -37,6 +37,7 @@
     background-color: #337ab7;
     border-color: #337ab7;
     margin-bottom: 10rpx;
+    font-size: 14px;
 }
 .buttonHove{
 	color: #000000 !important;

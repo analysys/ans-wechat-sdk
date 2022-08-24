@@ -15,7 +15,7 @@
         <icon wx:if = "{{profileSet.flag == -1}}" class="demo-box-warn" type="warn" size="43"></icon>
       </view> -->
     <view class="header">
-        <button bindtap="nextPage" hover-class="buttonHove">下一页</button>
+        <button bindtap="nextPage" data-id="{{999}}" data-type="{{123}}" data-content="dddd" hover-class="buttonHove">下一页</button>
         <button id="demo-box-API" class="API">合法参数的API(超级属性系列)</button>
         <button bindtap="registerSuperProperty" hover-class="buttonHove">
             registerSuperProperty
