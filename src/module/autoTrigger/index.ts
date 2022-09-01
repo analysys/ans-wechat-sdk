@@ -5,6 +5,7 @@ import { setPathParams } from '../../store/pathParams'
 import ready from '../ready'
 import { config } from '../../store/config'
 import { isFunction } from '../../utils/type'
+import { eventAttribute } from '../../store/eventAttribute'
 
 
 // 原有生命周周期函数的封装 ，不影响小程序原有生命周期函数执行
@@ -73,10 +74,20 @@ export function AppFn (app) {
   })
 
   // 自动上报启动事件
-  appFnApply(app, 'onShow', ready(startUp))
+  appFnApply(app, 'onShow', () => {
+    if (!eventAttribute.startup.state) {
+      ready(startUp)()
+      eventAttribute.startup.state = true
+    }
+  })
 
   // 全局监听app onHide事件
-  appFnApply(app, 'onHide', end)
+  appFnApply(app, 'onHide', () => {
+    if (eventAttribute.startup.state) {
+      end()
+      eventAttribute.startup.state = false
+    }
+  })
 
   APP(app)
 }

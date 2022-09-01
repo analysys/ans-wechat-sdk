@@ -37,6 +37,7 @@ export function getPathParams (): object {
 }
 
 export function setPathParams (option: {query: paramsValue, scene: number}) : any {
+  
   const query = option.query
   
   if (query) {

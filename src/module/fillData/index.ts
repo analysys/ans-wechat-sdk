@@ -22,7 +22,7 @@ export default function (eventName: string) : buriedPointData {
 
   // 填充事件私有属性
   if (event) {
-    event.attrs.forEach(o => {
+    event.forEach(o => {
       obj.xcontext[o] = getAttr[o] ? getAttr[o]() : ''
     })
   }

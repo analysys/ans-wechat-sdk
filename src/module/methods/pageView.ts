@@ -14,7 +14,9 @@ function pageView (pageName: string, properties: object) {
   
   if (lengthCheck(pageName)) {
     userObj['$title'] = pageName
-    customProperties = attrCheck(properties, eventName)
+    if (properties) {
+      customProperties = attrCheck(properties, eventName)
+    }
   }
 
   userObj = Object.assign({}, customProperties, userObj)

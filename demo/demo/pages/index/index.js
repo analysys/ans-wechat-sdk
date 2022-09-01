@@ -9,7 +9,7 @@ Page({
     // console.log(this)
     let shareProperties = {
       title: "6点分享",
-      path: 'pages/index/index?id=123'
+      path: 'pages/index/index?id=&utm_campaign=123'
     }
     return AnalysysAgent.share(shareProperties, {'11add': 123});
     // return shareProperties

@@ -90,6 +90,8 @@ App({
     //   integral: 200,
     // }
     // AnalysysAgent.profileIncrement(profies)
+
+    
   },
   onHide: function () {
     console.log('onhide+2222')
