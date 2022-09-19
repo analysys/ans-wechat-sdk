@@ -10,8 +10,14 @@ import { isFunction } from '../../utils/type'
 // 一次最多上报20条
 const MAXLINENUM = 20
 
+// 上报失败后重试次数
+const RETRNUM = 3
+
 // 正在上报数据
 let doingList: Array<buriedPointData> = []
+
+// 当前重试次数
+let retryCount = 0
 
 // 发送请求
 function postData (successFn?: () => void) : any {
@@ -51,12 +57,11 @@ function postData (successFn?: () => void) : any {
   
   // ea 上报数据
   globalWindow.AnalysysModal && globalWindow.AnalysysModal(doingList)
-
   io({
     url: option.url,
     method: 'POST',
     data: option.data,
-    timeout: 2000
+    timeout: config.sendDataTimeout
   }).then(res => {
     
     // 上报成功后删除队列与相应的缓存数据
@@ -71,10 +76,19 @@ function postData (successFn?: () => void) : any {
     successLog({
       code: 20001
     })
+
+    retryCount = 0
+
   }).catch(e => {
+    doingList = []
     errorLog({
       code: 60008
     })
+    // 失败后重试上报，最多重试RETRNUM次
+    if (retryCount < RETRNUM) {
+      postData()
+      retryCount++
+    }
   })
 }
 

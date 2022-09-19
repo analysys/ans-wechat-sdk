@@ -5,7 +5,7 @@ AnalysysAgent.encrypt = AnalysysEncryption
 
 import AnalysysAgent from  './sdk/AnalysysAgent_WX_SDK.es6.min.js';
 
-
+console.time('time')
 
 // AnalysysAgent.debugMode = 2
 // AnalysysAgent.appkey = '2d01eb66efd95d2c'
@@ -25,6 +25,7 @@ AnalysysAgent.init({
   debugMode: 2,
   $appname: 'test_appname',
   $appid: 'test_app_id',
+  autoPageViewDuration: true,
   autoShare: false
 })
 
@@ -41,6 +42,7 @@ AnalysysAgent.onBeforeStartUp = function (res) {
 AnalysysAgent.onAfterStartUp = function (res) {
   console.log('预制启动事件发送成功')
   console.log(res)
+  console.timeEnd('time')
 }
 
 // AnalysysAgent.alias('abc')

@@ -5,7 +5,9 @@ import { setPathParams } from '../../store/pathParams'
 import ready from '../ready'
 import { config } from '../../store/config'
 import { isFunction } from '../../utils/type'
+import { getPath } from '../../utils/path'
 import { eventAttribute } from '../../store/eventAttribute'
+import { getNow } from '../../store/time'
 
 
 // 原有生命周周期函数的封装 ，不影响小程序原有生命周期函数执行
@@ -35,15 +37,40 @@ export function appFnApply (obj, Fn, toFn) {
 
 export function hookMethods (methods) {
 
-  // 自动采集pageview事件
-  if (config.auto === true) {
-    appFnApply(methods, 'onShow', ready(pageView))
-  }
+  appFnApply(methods, 'onShow', ()=> {
+    // 是否自动采集pageview事件
+    if (config.auto === true) {
+      let path = getPath()
+
+      // 防止多次自动触发pageView事件
+      if (!eventAttribute.pageview.state[path]) {
+        ready(pageView)()
+        eventAttribute.pageview.state[path] = true
+      }
+    } else {
+
+      // 未自动采集时，记录页面浏览时间
+      eventAttribute.pageview.xwhen = getNow()
+    }
+  })
+  
 
   // 监听页面离开
   if (config.autoPageViewDuration) {
-    appFnApply(methods, 'onHide', pageClose)
-    appFnApply(methods, 'onUnload', pageClose)
+    let statusClear = function () {
+      let path = getPath()
+      if (eventAttribute.pageview.state[path]) {
+        delete eventAttribute.pageview.state[path]
+      }
+    }
+    appFnApply(methods, 'onHide', () => {
+      pageClose()
+      statusClear()
+    })
+    appFnApply(methods, 'onUnload', () => {
+      pageClose()
+      statusClear()
+    })
   }
 
   if (config.autoShare == true) {
@@ -88,7 +115,6 @@ export function AppFn (app) {
       eventAttribute.startup.state = false
     }
   })
-
   APP(app)
 }
 

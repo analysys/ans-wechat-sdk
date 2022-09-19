@@ -15,6 +15,7 @@ export interface initConfig {
   autoTrack?: boolean;
   autoCompleteURL?: boolean;
   autoPageViewDuration?: boolean;
+  sendDataTimeout?: number;
   $appid?: string;
   $appname?: string;
 }

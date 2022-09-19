@@ -47,6 +47,9 @@ const configRule = {
   autoPageViewDuration: {
     verify: [isBoolean]
   },
+  sendDataTimeout: {
+    verify: [isNumber],
+  },
   $appname: {
     verify: [isString]
   },

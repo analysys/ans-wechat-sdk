@@ -22,6 +22,7 @@ export function optionsDefault() : initConfig {
     autoTrack: false,
     autoCompleteURL: true,
     autoPageViewDuration: false,
+    sendDataTimeout: 10000,
     $appid: '',
     $appname: ''
   }
