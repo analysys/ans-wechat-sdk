@@ -98,7 +98,7 @@ function postData (successFn?: () => void) : any {
  */
 
 function sendData (data: buriedPointData, successFn?: () => void) : any {
-
+  
   // 加入待上报队列
   addPostData(data)
 

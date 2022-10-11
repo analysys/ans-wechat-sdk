@@ -5,7 +5,7 @@ import { setPathParams } from '../../store/pathParams'
 import ready from '../ready'
 import { config } from '../../store/config'
 import { isFunction } from '../../utils/type'
-import { getPath } from '../../utils/path'
+import { getPath, getCurrentPage } from '../../utils/path'
 import { eventAttribute } from '../../store/eventAttribute'
 import { getNow } from '../../store/time'
 
@@ -40,12 +40,12 @@ export function hookMethods (methods) {
   appFnApply(methods, 'onShow', ()=> {
     // 是否自动采集pageview事件
     if (config.auto === true) {
-      let path = getPath()
-
+      const self = getCurrentPage()
+      const pageId = self.__wxExparserNodeId__
       // 防止多次自动触发pageView事件
-      if (!eventAttribute.pageview.state[path]) {
+      if (!eventAttribute.pageview.state[pageId]) {
         ready(pageView)()
-        eventAttribute.pageview.state[path] = true
+        eventAttribute.pageview.state[pageId] = true
       }
     } else {
 
@@ -58,9 +58,10 @@ export function hookMethods (methods) {
   // 监听页面离开
   if (config.autoPageViewDuration) {
     let statusClear = function () {
-      let path = getPath()
-      if (eventAttribute.pageview.state[path]) {
-        delete eventAttribute.pageview.state[path]
+      const self = getCurrentPage()
+      const pageId = self.__wxExparserNodeId__
+      if (eventAttribute.pageview.state[pageId]) {
+        delete eventAttribute.pageview.state[pageId]
       }
     }
     appFnApply(methods, 'onHide', () => {

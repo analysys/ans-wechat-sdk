@@ -46,8 +46,8 @@ class ArkWxSdk {
   profileDelete = profileDelete;
   profileUnset = profileUnset;
   reset = reset;
-  track = track;
-  alias = alias;
+  track = ready(track);
+  alias = ready(alias);
   getPresetProperties = getPresetProperties;
   identify = identify;
   getDistinctId = getDistinctId;

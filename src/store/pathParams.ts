@@ -3,7 +3,7 @@
  */
 
  interface paramsValue {
-  scene?: number;
+  scene?: number | string;
 
   campaign_id?: string;
   utm_campaign_id?: string;
