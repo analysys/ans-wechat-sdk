@@ -5,7 +5,7 @@ import { setPathParams } from '../../store/pathParams'
 import ready from '../ready'
 import { config } from '../../store/config'
 import { isFunction } from '../../utils/type'
-import { getPath, getCurrentPage } from '../../utils/path'
+import { getCurrentPage } from '../../utils/path'
 import { eventAttribute } from '../../store/eventAttribute'
 import { getNow } from '../../store/time'
 

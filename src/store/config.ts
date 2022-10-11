@@ -10,7 +10,7 @@ const configRule = {
     verify: [lengthCheck]
   },
   uploadURL: {
-    verify: [isString]
+    verify: [lengthCheck]
   },
   debugMode: {
     verify: [isNumber]
@@ -81,7 +81,7 @@ export function setConfig (options: initConfig, isVerify = true) : Promise<objec
               key: o,
               code: 60002,
               value: value
-            })
+            }, true)
           } else {
             config[o] = value
           }

@@ -21,7 +21,6 @@ const errorMessage = {
 	'60008': 'Send message failed.',
 	'60009': '{FN}:The length of the property key (string[{KEY}]) needs to be 1-125 !',
 	'600010': '{FN}:The length of the property key (string[{KEY}]) needs to be 1-99 !',
-	'600011': '{FN}:[{KEY}] does not conform to naming rules!',
 	'600012': '{FN}:Property key invalid, nonsupport value: '+ readOnlyAttrs.join('/') +' \n' +
 		'current KEY:{KEY}',
 	'600016': '{FN}: Property value invalid, support type: Object \n' +
@@ -63,14 +62,14 @@ export function successLog(opt: msgetype) {
 }
 
 
-export function errorLog(opt: msgetype, msg?: string) {
+export function errorLog(opt: msgetype, isInit?: boolean) {
 	const msgTemp = errorMessage[opt.code] || errorMessage.common;
 	const showMsg = msgTemp.replace(/{FN}/g, opt.fn || '')
 		.replace(/{KEY}/g, JSON.stringify(opt.key || ''))
 		.replace(/{VALUE}/g, JSON.stringify(opt.value))
 		.replace(/{VALUETYPE}/g, getType(opt.value))
 		.replace(/{KEYTYPE}/g, getType(opt.key))
-	if (config.debugMode === 1 || config.debugMode === 2) {
+	if (config.debugMode === 1 || config.debugMode === 2 || isInit) {
 		console.warn(showMsg)
 	}
 }

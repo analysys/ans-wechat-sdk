@@ -98,7 +98,21 @@ function postData (successFn?: () => void) : any {
  */
 
 function sendData (data: buriedPointData, successFn?: () => void) : any {
-  
+
+  if (!config.appkey) {
+    errorLog({
+      code: 60006
+    })
+    return
+  }
+
+  if (!config.uploadURL) {
+    errorLog({
+      code: 60007
+    })
+    return
+  }
+
   // 加入待上报队列
   addPostData(data)
 
