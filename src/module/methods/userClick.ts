@@ -3,6 +3,7 @@ import sendData from '../sendData'
 import fillData from '../fillData'
 import { isObject } from '../../utils/type'
 import { getSuperProperty } from '../../store/core'
+import { getPageProperty } from '../../store/pageProperty'
 import { setUserClickAttrs } from '../../store/clickElement'
 
 function userClick(...args: any[]) {
@@ -28,7 +29,7 @@ function userClick(...args: any[]) {
     const res = fillData('$user_click')
 
     // 合并通用属性
-    res.xcontext = Object.assign({}, res.xcontext, getSuperProperty())
+    res.xcontext = Object.assign({}, res.xcontext, getSuperProperty(), getPageProperty())
 
     sendData(res)
   }
@@ -50,7 +51,7 @@ export function userClickTab(tabItem) {
   const res = fillData('$user_click')
 
   // 合并通用属性
-  res.xcontext = Object.assign({}, res.xcontext, getSuperProperty())
+  res.xcontext = Object.assign({}, res.xcontext, getSuperProperty(), getPageProperty())
 
   sendData(res)
 }

@@ -26,7 +26,8 @@ AnalysysAgent.init({
   $appname: 'test_appname',
   $appid: 'test_app_id',
   autoPageViewDuration: true,
-  autoShare: false
+  autoShare: false,
+  autoTrack: true
 })
 
 AnalysysAgent.registerSuperProperty('sfsf', 1)

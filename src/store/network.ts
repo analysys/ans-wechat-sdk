@@ -56,4 +56,8 @@ function hasNetwork () : boolean {
   return !network.networkType ? false : true
 }
 
+globalWindow.onNetworkStatusChange((res: {networkType: string}) => {
+  network.networkType = res.networkType
+})
+
 export { network, getNetwork, setNetwork, hasNetwork, isGetNetWork }
