@@ -7,7 +7,6 @@ import { system } from "../../store/system"
 import { getPath, getReferer } from '../../utils/path'
 import { pathParams } from '../../store/pathParams'
 import { clientTimeZone } from '../../utils/date'
-import { isString, isNumber } from "../../utils/type"
 import { valToString, valToNumber } from "../../utils/type/transform"
 import { dateFormat } from "../../utils/date"
 import { userClickAttrs } from "../../store/clickElement"
@@ -89,23 +88,16 @@ export default {
 
    // 是否安装后首次访问
   $is_first_time () {
-    return !core.FRISTDAY
+    return !core.ARKFRISTPROFILE
   },
 
   // 是否安装后首日访问
   $is_first_day () {
-    if (!core.FRISTDAY) {
+    const datetime = core.ARKFRISTPROFILE
+    if (!datetime) {
       return true
     }
-    if (isString(core.FRISTDAY)) {
-      return dateFormat(new Date(getNow()), 'yyyyMMdd') === core.FRISTDAY
-    }
-
-    if (isNumber(core.FRISTDAY)) {
-      return dateFormat(new Date(getNow()), 'yyyyMMdd') === dateFormat(new Date(core.FRISTDAY), 'yyyyMMdd')
-    }
-
-    return false
+    return dateFormat(new Date(getNow()), 'yyyyMMdd') === dateFormat(new Date(datetime), 'yyyyMMdd')
   },
   $first_visit_time () {
     return core.ARKFRISTPROFILE

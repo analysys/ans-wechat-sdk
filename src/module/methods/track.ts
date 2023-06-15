@@ -18,7 +18,9 @@ function track (eventName : string, eventAttrs : object) {
   }
 
   // 获取上报数据模块
-  const res = fillData(eventName)
+  const res = fillData('track')
+
+  res.xwhat = eventName
 
   // 合并通用属性
   res.xcontext = Object.assign({}, res.xcontext, getSuperProperty(), attrCheck(eventAttrs, eventName))

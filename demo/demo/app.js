@@ -7,20 +7,8 @@ import AnalysysAgent from  './sdk/AnalysysAgent_WX_SDK.es6.min.js';
 
 console.time('time')
 
-// AnalysysAgent.debugMode = 2
-// AnalysysAgent.appkey = '2d01eb66efd95d2c'
-// AnalysysAgent.uploadURL = 'https://uba-up.analysysdata.com'
-// AnalysysAgent.encryptType = 1 //使用加密文件的时候 放开赋值。（直接放开不会报错）
-// AnalysysAgent.autoShare = true
-// AnalysysAgent.auto = true
-// AnalysysAgent.allowTimeCheck = true
-// AnalysysAgent.autoPageViewDuration = true
-// AnalysysAgent.autoTrack = true
-// AnalysysAgent.$appname = 'test_appname'
-// AnalysysAgent.$appid = 'test_app_id'
-
 AnalysysAgent.init({
-  appkey: '2d01eb66efd95d2c',
+  appkey: '47fce41a0472c616',
   uploadURL: 'https://uba-up.analysysdata.com',
   debugMode: 2,
   $appname: 'test_appname',

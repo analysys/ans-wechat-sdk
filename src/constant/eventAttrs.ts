@@ -1,6 +1,7 @@
+const firstVisitTime = '$first_visit_time'
 
 // 只读属性，无法被更改
-export const readOnlyAttrs = ['$lib', '$lib_version', '$platform', '$first_visit_time', '$debug', '$is_login']
+export const readOnlyAttrs = ['$lib', '$lib_version', '$platform', firstVisitTime, '$debug', '$is_login']
 
 // 公共预制属性，任何事件上报都会带上这些属性
 export const publicAttrs: string[] = [
@@ -10,6 +11,11 @@ export const publicAttrs: string[] = [
   '$lib_version',
   '$platform',
   '$is_login',
+  '$debug'
+]
+
+// 行为事件上报会带上这部分属性
+export const actionEventAttrs = [
   '$brand',
   '$model',
   '$os',
@@ -20,7 +26,6 @@ export const publicAttrs: string[] = [
   '$screen_width',
   '$screen_height',
   '$language',
-  '$debug',
   '$time_zone',
   '$session_id',
   '$is_time_calibrated'
@@ -39,15 +44,18 @@ export const utmAttrs: string[] = [
 // 预制事件列表与事件属性
 export const events = {
   $startup: [
+    ...actionEventAttrs,
     ...utmAttrs,
-    '$is_first_day',
-    '$is_first_time', //首次访问，只在startUp
+    '$is_first_day', //是否安装后首日访问
+    '$is_first_time', //是否安装后首次访问，只在startUp
     '$scene'
   ],
   $end: [
+    ...actionEventAttrs,
     '$duration' //使用时长
   ],
   $pageview: [
+    ...actionEventAttrs,
     ...utmAttrs,
     '$is_first_day',
     '$referrer',
@@ -60,6 +68,7 @@ export const events = {
     '$share_level'
   ],
   page_close: [
+    ...actionEventAttrs,
     '$url',
     '$referrer',
     '$url_domain',
@@ -68,11 +77,9 @@ export const events = {
   $alias: [
     '$original_id'
   ],
-  $share: [],
-  $getPresetProperties: [
-    '$first_visit_time'
-  ],
+  $share: actionEventAttrs,
   $user_click: [
+    ...actionEventAttrs,
     '$element_content',
     '$element_id',
     '$element_type',
@@ -82,8 +89,13 @@ export const events = {
     '$url_path',
     '$is_first_day'
   ],
+  track: actionEventAttrs,
+  $getPresetProperties: [
+    ...actionEventAttrs,
+    firstVisitTime
+  ],
   $profile_set_once: [
-    '$first_visit_time',
+    firstVisitTime,
     '$first_visit_language'
   ]
 }
