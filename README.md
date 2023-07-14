@@ -14,10 +14,6 @@ $ npm install asd-wechat-sdk --save
 
 import AnalysysAgent from "asd-wechat-sdk"
 
-// 引入加密模块(非必须)
-import AnalysysEncryption  from 'asd-wechat-sdk/dist/AnalysysAgent_encryption.min.js';
-AnalysysAgent.encrypt = AnalysysEncryption;
-
 //初始化
 AnalysysAgent.init({
   appkey: '',

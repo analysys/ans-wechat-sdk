@@ -49,9 +49,8 @@ function ready (callback) {
         })
         isReady = true
       }
-
     } else {
-      callback.apply(callback, args)
+     return callback.apply(callback, args)
     }
   }
 }

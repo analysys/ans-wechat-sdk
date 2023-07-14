@@ -14,6 +14,7 @@ import {
   reset,
   share,
   track,
+  timeEvent,
   alias,
   registerSuperProperty, registerSuperProperties, getSuperProperty, getSuperProperties,
   unRegisterSuperProperty,
@@ -46,6 +47,7 @@ class ArkWxSdk {
   profileUnset = profileUnset;
   reset = reset;
   track = ready(track);
+  timeEvent = timeEvent;
   alias = ready(alias);
   getPresetProperties = getPresetProperties;
   identify = identify;

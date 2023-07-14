@@ -3,7 +3,7 @@
  */
 
 import { initConfig } from './types'
-import { setConfig } from './store/config'
+import { setConfig, config } from './store/config'
 import { globalWindow, optionsDefault } from './constant/index'
 import { coreInit } from './store/core'
 import ready from './module/ready'
@@ -14,6 +14,7 @@ import {
   reset,
   share,
   track,
+  timeEvent,
   alias,
   registerSuperProperty, registerSuperProperties, getSuperProperty, getSuperProperties,
   unRegisterSuperProperty,
@@ -30,11 +31,11 @@ class ArkWxSdk {
   constructor () {
     coreInit()
   }
-  config: initConfig = optionsDefault();
+  config: initConfig = config;
   pageView = ready(pageView);
   share = share;
-  registerSuperProperty = registerSuperProperty;
-  registerSuperProperties = registerSuperProperties;
+  registerSuperProperty = ready(registerSuperProperty);
+  registerSuperProperties = ready(registerSuperProperties);
   getSuperProperty = getSuperProperty;
   getSuperProperties = getSuperProperties;
   unRegisterSuperProperty = unRegisterSuperProperty;
@@ -47,6 +48,7 @@ class ArkWxSdk {
   profileUnset = profileUnset;
   reset = reset;
   track = ready(track);
+  timeEvent = timeEvent;
   alias = ready(alias);
   getPresetProperties = getPresetProperties;
   identify = identify;
@@ -82,6 +84,7 @@ Object.keys(optionsDefault()).forEach(o => {
     configurable: true
   })
 })
+
 const ArkSdk = new ArkWxSdk()
 globalWindow.AnalysysAgent = ArkSdk
 

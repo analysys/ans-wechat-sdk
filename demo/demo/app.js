@@ -5,8 +5,7 @@ AnalysysAgent.encrypt = AnalysysEncryption
 
 import AnalysysAgent from  './sdk/AnalysysAgent_WX_SDK.es6.min.js';
 
-console.time('time')
-
+AnalysysAgent.registerSuperProperty('sfsf', 1)
 AnalysysAgent.init({
   appkey: '47fce41a0472c616',
   uploadURL: 'https://uba-up.analysysdata.com',
@@ -15,10 +14,11 @@ AnalysysAgent.init({
   $appid: 'test_app_id',
   autoPageViewDuration: true,
   autoShare: false,
-  autoTrack: true
+  autoTrack: true,
+  allowTimeCheck: true
 })
 
-AnalysysAgent.registerSuperProperty('sfsf', 1)
+
 
 AnalysysAgent.onReady = function(config) {
   console.log('sdk已准备就绪')
@@ -28,28 +28,16 @@ AnalysysAgent.onBeforeStartUp = function (res) {
   console.log('开始发送预制启动事件')
   console.log(res)
 }
+
 AnalysysAgent.onAfterStartUp = function (res) {
   console.log('预制启动事件发送成功')
   console.log(res)
   console.timeEnd('time')
 }
 
-// AnalysysAgent.alias('abc')
-
-// AnalysysAgent.registerSuperProperties({})
-
-// console.log(AnalysysAgent.registerSuperProperties)
-
 App({
   onLaunch: function(options) {
-    
-    // AnalysysAgent.identify('identy1111111', false)
-    // AnalysysAgent.alias("1")
-    // AnalysysAgent.pageProperty({'page1':'property1'})
-
-    // AnalysysAgent.pageView('test', {username: 'hry'})
-
-    // console.log('APP---onLaunch--->', options)
+   
     if (options.shareTicket) {
       wx.getShareInfo({
         shareTicket: options.shareTicket,
@@ -62,27 +50,6 @@ App({
   },
   onShow: function(options) {
     console.log('onshow+111')
-    // console.log('APP---onShow--->', options)
-    // AnalysysAgent.appStart(options)
-    // if (options.shareTicket) {
-    //   wx.getShareInfo({
-    //     shareTicket: options.shareTicket,
-    //     success: function (res) {
-    //       //解密res.encryptedDat
-    //       console.log('获取成功--->', res)
-    //       // AnalysysAgent.appProperty({ 'openGId': 123256465 })
-    //     }
-    //   })
-    // }
-
-    // AnalysysAgent.profileAppend('Movies', '霸王别姬')
-    // let profies = {
-    //   age: 20,
-    //   integral: 200,
-    // }
-    // AnalysysAgent.profileIncrement(profies)
-
-    
   },
   onHide: function () {
     console.log('onhide+2222')

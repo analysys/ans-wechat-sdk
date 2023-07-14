@@ -9,6 +9,7 @@ import alias from './alias'
 import userClick, { userClickTab } from './userClick'
 import { profileSetOnce, profileSet, profileAppend, profileIncrement, profileDelete, profileUnset } from './profile'
 import reset from './reset'
+import timeEvent from './timeEvent'
 import { getPresetProperties } from './presetProperties'
 import track from './track'
 import { identify, getDistinctId} from './identify'
@@ -28,6 +29,7 @@ export {
   pageClose,
   end,
   track,
+  timeEvent,
   alias,
   share,
   userClick, userClickTab,

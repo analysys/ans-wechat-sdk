@@ -107,7 +107,7 @@ export default [{
 }, {
   input: './src/indexCustom.ts',
   output: [{
-    file: './demo/demoTaro/sdk/AnalysysAgent_WX_SDK.custom.min.js',
+    file: './demo/taro/sdk/AnalysysAgent_WX_SDK.custom.min.js',
     format: 'cjs',
     name: 'Ans'
   }, {
@@ -115,7 +115,7 @@ export default [{
     format: 'cjs',
     name: 'Ans'
   }, {
-    file: './demo/demoTaro/sdk/AnalysysAgent_WX_SDK.custom.es6.min.js',
+    file: './demo/taro/sdk/AnalysysAgent_WX_SDK.custom.es6.min.js',
     format: 'esm',
     name: 'Ans'
   }, {

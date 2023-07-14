@@ -196,7 +196,7 @@ Page({
   },
   track: function () {
     let eventInfo = {
-      "money": 20
+      "money": '20'
     }
     AnalysysAgent.track('payment', eventInfo)
   },

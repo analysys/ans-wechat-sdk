@@ -52,7 +52,8 @@ export const events = {
   ],
   $end: [
     ...actionEventAttrs,
-    '$duration' //使用时长
+    '$duration', //使用时长
+    '$is_first_day'
   ],
   $pageview: [
     ...actionEventAttrs,

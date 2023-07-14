@@ -56,24 +56,26 @@ export function hookMethods (methods) {
   
 
   // 监听页面离开
-  if (config.autoPageViewDuration) {
-    let statusClear = function () {
-      const self = getCurrentPage()
-      const pageId = self.__wxExparserNodeId__
-      if (eventAttribute.pageview.state[pageId]) {
-        delete eventAttribute.pageview.state[pageId]
-      }
+  let statusClear = function () {
+    const self = getCurrentPage()
+    const pageId = self.__wxExparserNodeId__
+    if (eventAttribute.pageview.state[pageId]) {
+      delete eventAttribute.pageview.state[pageId]
     }
-    appFnApply(methods, 'onHide', () => {
-      pageClose()
-      statusClear()
-    })
-    appFnApply(methods, 'onUnload', () => {
-      pageClose()
-      statusClear()
-    })
   }
-
+  appFnApply(methods, 'onHide', () => {
+    if (config.autoPageViewDuration) {
+      pageClose()
+    }
+    statusClear()
+  })
+  appFnApply(methods, 'onUnload', () => {
+    if (config.autoPageViewDuration) {
+      pageClose()
+    }
+    statusClear()
+  })
+  
   if (config.autoShare == true) {
     appFnApply(methods, 'onShareAppMessage', share)
   }

@@ -4,23 +4,30 @@ import getType from '../../utils/type'
 import { msgetype } from '../../types'
 import { readOnlyAttrs } from '../../constant/eventAttrs'
 
+function keyErr (type: string) {
+	return `{FN}:Property value invalid of key[{KEY}], support type: ${type}
+	current value: {VALUE}
+	current type: {VALUETYPE}`
+}
+
+// 长度提示
+function lenRrrlog (lens) {
+	return `{FN}:The length of the property key (string[{KEY}]) needs to be ${lens} !`
+}
+
 const errorMessage = {
 	'common': '',
 	'60001': '{FN}:Property key invalid, support type: String \n' +
 		'current key:{KEY}\n' +
 		'current keyType:{KEYTYPE}',
-	'60002': '{FN}:Property value invalid of key[{KEY}], support type: Number \n' +
-		'current value: {VALUE}\n' +
-		'current type: {VALUETYPE}',
-	'60003': '{FN}:Property value invalid of key[{KEY}], support type: Boolean \n' +
-		'current value:{VALUE}\n' +
-		'current type: {VALUETYPE}',
+	'60002': keyErr('Number'),
+	'60003': keyErr('Boolean'),
 	'60005': '{FN}:The length of the property[{KEY}] value (string[{VALUE}]) needs to be 1-255 !',
 	'60006': 'Please set appkey first.',
 	'60007': 'Please set uploadURL first.',
 	'60008': 'Send message failed.',
-	'60009': '{FN}:The length of the property key (string[{KEY}]) needs to be 1-125 !',
-	'600010': '{FN}:The length of the property key (string[{KEY}]) needs to be 1-99 !',
+	'60009': lenRrrlog('1-125'),
+	'600010':lenRrrlog('1-99'),
 	'600012': '{FN}:Property key invalid, nonsupport value: '+ readOnlyAttrs.join('/') +' \n' +
 		'current KEY:{KEY}',
 	'600016': '{FN}: Property value invalid, support type: Object \n' +

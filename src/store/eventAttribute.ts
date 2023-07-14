@@ -10,5 +10,8 @@ export const eventAttribute = {
     state: {  // 当前页面pageview上报状态
       
     }
-  }
+  },
+
+  // 记录自定义时间持续时长
+  timeEvent: {}
 }

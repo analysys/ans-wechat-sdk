@@ -20,26 +20,28 @@ import { pathParams } from "../../store/pathParams"
  * @returns 
  */
 export function getPath(isQuery?: boolean): string {
+  const pages = getCurrentPages()
 
-  const self = getCurrentPage()
-  const path = self.route || ''
-
-  if (isQuery) {
-    const options = self.options
-    const optionArr = Object.keys(options)
-    if (optionArr.length) {
-      let parameter = ''
-      optionArr.forEach((o, i)=> {
-        if (i) {
-          parameter += '&'
-        }
-        parameter += o + '=' + options[o]
-      })
-      return path + '?' + parameter
+  if (pages.length) {
+    const self = pages[pages.length - 1]
+    const path = self.route
+    if (isQuery) {
+      const options = self.options
+      const optionArr = Object.keys(options)
+      if (optionArr.length) {
+        let parameter = ''
+        optionArr.forEach((o, i)=> {
+          if (i) {
+            parameter += '&'
+          }
+          parameter += o + '=' + options[o]
+        })
+        return path + '?' + parameter
+      }
     }
+    return path
   }
-
-  return path
+  return ''
 }
 
 
