@@ -80,22 +80,23 @@ export function attrValueCheck (value: any, logObj?: msgetype): boolean {
 export function attrCheck (value: any, eventName?: string): object {
 
   const arrs = {}
-  
-  if (!isObject(value)) {
-    errorLog({
-      code: 600016,
-      fn: eventName,
-      value: value
-    })
-    return {}
-  }
-
-  for (const key in value) {
-    const item = value[key]
-    if (attrNameCheck(key, {code: 600023, fn: eventName, key: key}) && attrValueCheck(item, {code: 600022, fn: eventName, key: key, value: item})) {
-      arrs[key] = item
+  if (value) {
+    if (!isObject(value)) {
+      errorLog({
+        code: 600016,
+        fn: eventName,
+        value: value
+      })
+      return {}
     }
-  }
 
+    for (const key in value) {
+      const item = value[key]
+      if (attrNameCheck(key, {code: 600023, fn: eventName, key: key}) && attrValueCheck(item, {code: 600022, fn: eventName, key: key, value: item})) {
+        arrs[key] = item
+      }
+    }
+    
+  }
   return arrs
 }
