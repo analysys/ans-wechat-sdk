@@ -4,6 +4,7 @@ import { optionsDefault } from '../constant'
 import { isBoolean, isNumber, isString } from '../utils/type'
 import { lengthCheck } from '../utils/verify'
 import { errorLog } from '../module/printLog'
+import { coreInit } from './core'
 
 const configRule = {
   appkey: {
@@ -58,6 +59,9 @@ const configRule = {
   }
 }
 
+// 是否完成初始化参数配置
+export let isInitConfig  = false
+
 export const config : initConfig = optionsDefault()
 
 export function setConfig (options: initConfig, isVerify = true) : Promise<object> {
@@ -88,6 +92,8 @@ export function setConfig (options: initConfig, isVerify = true) : Promise<objec
         }
       })
     }
+    coreInit()
+    isInitConfig = true
     resolve(config)
   })
 }

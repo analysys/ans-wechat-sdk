@@ -104,9 +104,9 @@ export function AppFn (app) {
   })
 
   // 自动上报启动事件
-  appFnApply(app, 'onShow', () => {
+  appFnApply(app, 'onShow', (...arg) => {
     if (!eventAttribute.startup.state) {
-      ready(startUp)()
+      ready(startUp)(...arg)
       eventAttribute.startup.state = true
     }
   })

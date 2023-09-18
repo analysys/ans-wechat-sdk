@@ -1,7 +1,7 @@
 
 import { registerSuperProperty, registerSuperProperties, getSuperProperty, getSuperProperties, unRegisterSuperProperty, clearSuperProperties} from './superProperty'
 import pageView from './pageView'
-import pageClose from './pageClose'
+import pageClose from './pageclose'
 import startUp from './startUp'
 import appStart from './appStart'
 import end from './end'

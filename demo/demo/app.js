@@ -6,6 +6,9 @@ AnalysysAgent.encrypt = AnalysysEncryption
 import AnalysysAgent from  './sdk/AnalysysAgent_WX_SDK.es6.min.js';
 
 AnalysysAgent.registerSuperProperty('sfsf', 1)
+
+
+AnalysysAgent.identify('openid123123')
 AnalysysAgent.init({
   appkey: '47fce41a0472c616',
   uploadURL: 'https://uba-up.analysysdata.com',
@@ -26,13 +29,10 @@ AnalysysAgent.onReady = function(config) {
 
 AnalysysAgent.onBeforeStartUp = function (res) {
   console.log('开始发送预制启动事件')
-  console.log(res)
 }
 
 AnalysysAgent.onAfterStartUp = function (res) {
   console.log('预制启动事件发送成功')
-  console.log(res)
-  console.timeEnd('time')
 }
 
 App({

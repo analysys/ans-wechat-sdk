@@ -4,6 +4,7 @@ import { $ans } from '../constant/index'
 import { setStorage, getStorage } from '../utils/storage'
 import MD5 from '../utils/md5'
 import { setSystem } from './system'
+import { config } from './config'
 
 export interface coreInterface {
 
@@ -45,9 +46,9 @@ export interface coreInterface {
  */
 export function coreDefault() : coreInterface  {
   return {
-    ARKAPPID: '',
-    ARKDEBUG: 0,
-    ARKUPLOADURL: '',
+    ARKAPPID: config.appkey,
+    ARKDEBUG: config.debugMode,
+    ARKUPLOADURL: config.uploadURL,
     ARKFRISTPROFILE: '',
     ARKFRISTPROFILESEND: false,
     ARKSUPER: {},
@@ -64,14 +65,25 @@ export let core : coreInterface
 /**
  * 初始化
  */
+
+function setDefCore () {
+  core = coreDefault()
+  setStorage()
+}
+
 export function coreInit () {
   let storageCore = getStorage()
+
   if (!storageCore) {
-    storageCore = coreDefault()
-    core = storageCore
-    setStorage()
+    setDefCore()
   } else {
-    core = storageCore
+    const ARKDEBUG = storageCore.ARKDEBUG
+
+    if (config.appkey !== storageCore.ARKAPPID || (ARKDEBUG === 1 && ARKDEBUG !== config.debugMode) || storageCore.ARKUPLOADURL !== config.uploadURL) {
+      setDefCore()
+    } else {
+      core = storageCore
+    }
   }
 
   // 设置设备相关信息

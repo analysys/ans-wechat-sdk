@@ -15,7 +15,7 @@ function lenRrrlog (lens) {
 	return `{FN}:The length of the property key (string[{KEY}]) needs to be ${lens} !`
 }
 
-const errorMessage = {
+export const errorMessage = {
 	'common': '',
 	'60001': '{FN}:Property key invalid, support type: String \n' +
 		'current key:{KEY}\n' +

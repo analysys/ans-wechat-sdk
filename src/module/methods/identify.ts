@@ -36,6 +36,8 @@ export function identify(distinctId: string) : void {
  * @returns 
  */
 
-export function getDistinctId() : string {
-  return getAnonymousID()
+export function getDistinctId(callback?: (id: string) => void) : string {
+  const id = getAnonymousID()
+  callback && callback(id)
+  return id
 }
