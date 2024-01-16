@@ -3,7 +3,7 @@ import fillData from '../fillData'
 import { lengthCheck } from '../../utils/verify/index'
 import { config } from '../../store/config'
 import { profileSetOnce } from './profile'
-import { setCoreParam } from '../../store/core'
+import { setCoreParam, getId } from '../../store/core'
 import { successLog, errorLog } from '../printLog'
 import { addPostData } from '../../store/core'
 
@@ -17,6 +17,13 @@ function alias (aliasId: string) {
       fn: 'alias'
     })
     return false
+  }
+
+  if (aliasId === getId()) {
+    successLog({
+      code: 20014
+    })
+    return
   }
 
   // 设置登录后id

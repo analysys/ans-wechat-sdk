@@ -20,7 +20,7 @@ Page({
     console.log('222222')
     // AnalysysAgent.registerSuperProperty('b', 7777)
     // AnalysysAgent.track("a1111111a", { a: 1 })
-    AnalysysAgent.pageProperty({ 'sd': 'property1'})
+    // AnalysysAgent.pageProperty({ 'sd': 'property1'})
   },
   onHide: function () {
     console.log('onHide-index-11')
@@ -186,7 +186,7 @@ Page({
   },
   // 其他合法逻辑，
   alias: function () {
-    AnalysysAgent.alias("1")
+    AnalysysAgent.alias("hry")
   },
   identify: function () {
     AnalysysAgent.identify("identy", false)
@@ -196,7 +196,7 @@ Page({
   },
   track: function () {
     let eventInfo = {
-      "money": '20'
+      "money": 20
     }
     AnalysysAgent.track('payment', eventInfo)
   },

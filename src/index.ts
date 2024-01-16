@@ -4,10 +4,12 @@
 
 import { initConfig } from './types'
 import { setConfig, config } from './store/config'
-import { globalWindow, optionsDefault, $lib_version } from './constant/index'
-import ready, { implementAallbackArr } from './module/ready'
+import { globalWindow, $lib_version } from './constant/index'
+import ready from './module/ready'
 import { successLog, errorMessage } from './module/printLog/index'
 import {
+  appStart,
+  end,
   pageView,
   profileSetOnce, profileSet, profileAppend, profileIncrement, profileDelete, profileUnset,
   reset,
@@ -24,18 +26,14 @@ import {
   pageProperty
 } from './module/methods/index'
 import autoTrigger from './module/autoTrigger'
-import { setNetwork } from './store/network'
-import { getServerTime } from './store/time'
 
 
 class ArkWxSdk {
-  constructor () {
-    Promise.all([setNetwork(), getServerTime()]).then(() => {
-      implementAallbackArr()
-    })
-  }
+  constructor () {}
   version: string = $lib_version;
   config: initConfig = config;
+  appStart = ready(appStart);
+  appEnd = ready(end);
   pageView = ready(pageView);
   share = ready(share);
   registerSuperProperty = ready(registerSuperProperty, true);
@@ -68,13 +66,12 @@ class ArkWxSdk {
       successLog({
         code: 20007
       })
-      implementAallbackArr()
     })
   }
 }
 
 // 初始化传入配置
-Object.defineProperty(ArkWxSdk.prototype, 'appKey', {
+Object.defineProperty(ArkWxSdk.prototype, 'appkey', {
   set: function set() {
     throw new Error('请使用init方法初始化sdk') 
   },

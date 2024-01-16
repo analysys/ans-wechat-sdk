@@ -1,6 +1,6 @@
 {
 	"name": "asd-wechat-sdk",
-	"version": "5.0.4",
+	"version": "5.0.4.1",
 	"description": "This is the offical wechat SDK for Analysys.",
 	"main": "dist/AnalysysAgent_WX_SDK.min.js",
 	"module": "dist/AnalysysAgent_WX_SDK.es6.min.js",

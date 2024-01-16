@@ -6,13 +6,15 @@ export interface initConfig {
   appkey?: string;
   uploadURL?: string;
   debugMode?: number;
-  auto?: boolean;
-  autoProfile?: boolean;
+  autoStartUp?: boolean;//是否自动采集startUp
+  autoEnd?:boolean; //是否自动采集end
+  auto?: boolean; //是否自动采集pageview
+  autoProfile?: boolean;  //是否自动追踪新用户的首次属性
   encryptType?: number;
-  autoShare?: boolean;
+  autoShare?: boolean; //是否自动采集分享按钮点击事件
   allowTimeCheck?: boolean;
   maxDiffTimeInterval?: number;
-  autoTrack?: boolean;
+  autoTrack?: boolean; //是否自动采集全埋点
   autoCompleteURL?: boolean;
   autoPageViewDuration?: boolean;
   sendDataTimeout?: number;

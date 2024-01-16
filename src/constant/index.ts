@@ -14,6 +14,8 @@ export function optionsDefault() : initConfig {
     uploadURL: '',
     debugMode: 0,
     auto: true,
+    autoStartUp: true,
+    autoEnd: true,
     autoProfile: true,
     encryptType: 0,
     autoShare: false,

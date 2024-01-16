@@ -106,7 +106,9 @@ export function AppFn (app) {
   // 自动上报启动事件
   appFnApply(app, 'onShow', (...arg) => {
     if (!eventAttribute.startup.state) {
-      ready(startUp)(...arg)
+      if (config.autoStartUp){
+        ready(startUp)(...arg)
+      }
       eventAttribute.startup.state = true
     }
   })
@@ -114,7 +116,9 @@ export function AppFn (app) {
   // 全局监听app onHide事件
   appFnApply(app, 'onHide', () => {
     if (eventAttribute.startup.state) {
-      end()
+      if (config.autoEnd) {
+        end()
+      }
       eventAttribute.startup.state = false
     }
   })

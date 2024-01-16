@@ -5,6 +5,9 @@ import { isBoolean, isNumber, isString } from '../utils/type'
 import { lengthCheck } from '../utils/verify'
 import { errorLog } from '../module/printLog'
 import { coreInit } from './core'
+import { implementAallbackArr } from '../module/ready'
+import { setNetwork } from './network'
+import { getServerTime } from './time'
 
 const configRule = {
   appkey: {
@@ -15,6 +18,12 @@ const configRule = {
   },
   debugMode: {
     verify: [isNumber]
+  },
+  autoStartUp: {
+    verify: [isBoolean]
+  },
+  autoEnd: {
+    verify: [isBoolean]
   },
   auto: {
     verify: [isBoolean]
@@ -59,8 +68,6 @@ const configRule = {
   }
 }
 
-// 是否完成初始化参数配置
-export let isInitConfig  = false
 
 export const config : initConfig = optionsDefault()
 
@@ -92,9 +99,14 @@ export function setConfig (options: initConfig, isVerify = true) : Promise<objec
         }
       })
     }
+
     coreInit()
-    isInitConfig = true
-    resolve(config)
+    
+    
+    Promise.all([setNetwork(), getServerTime()]).then(() => {
+      implementAallbackArr()
+      resolve(config)
+    })
   })
 }
 
